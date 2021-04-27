@@ -13,37 +13,50 @@ function App() {
         {id: v1(), title: 'React', isDone: false}, //t
         {id: v1(), title: 'Redux', isDone: false}, //t
     ])
-    const [filter, setFilter] = useState<FilterValuesType>('all')
+    const [filterTask, setFilterTask] = useState<FilterValuesType>('all') //all
 
     function removeTasks(id: string) {
         const filteredTasks = tasks.filter(t => t.id !== id) //фильтр, пропусти те таски, id-шки которых не равны удаленной id-шке
         setTasks(filteredTasks) //setTasks - функция, которая меняет данные и вызывается после логической обработки; в параметрах - отфильтрованный массив
     }
+
     function changeFilter(value: FilterValuesType) {
-        setFilter(value)
+        setFilterTask(value)
     }
 
     let tasksForTodolist = tasks
-    if (filter === 'completed') {
-        tasksForTodolist = tasks.filter(t => t.isDone === true)
+    if (filterTask === 'completed') {
+        tasksForTodolist = tasks.filter(t => t.isDone) //completed
     }
-    if (filter === 'active') {
-        tasksForTodolist = tasks.filter(t => t.isDone === false)
+    if (filterTask === 'active') {
+        tasksForTodolist = tasks.filter(t => !t.isDone) //active
     }
 
     function addTask(title: string) {
-        const newTask = {id: v1(), title, isDone: false}
-        const newTasks = [newTask, ...tasks]
-        setTasks(newTasks)
+        const newTask = {
+            id: v1(),
+            title,
+            isDone: false
+        }
+        setTasks([newTask, ...tasks])
     }
+
+    function changeTaskStatus(taskId: string, newIsDoneChecked: boolean) {
+        let task = tasks.find(t => t.id === taskId)
+        task && (task.isDone = newIsDoneChecked)
+        setTasks([...tasks])
+    }
+
 
     return (
         <div className="App">
-            <Todolist title={'What to learn'}
+            <Todolist title="What to learn"
                       tasks={tasksForTodolist}
                       removeTasks={removeTasks}
                       changeFilter={changeFilter}
                       addTask={addTask}
+                      changeTaskStatus={changeTaskStatus}
+                      filterTask={filterTask}
             />
         </div>
     )
