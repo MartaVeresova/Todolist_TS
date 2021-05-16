@@ -1,12 +1,11 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 
-export type AddItemFormPropsType = {
-    addItem: (title: string) => void
+type AddItemFormPropsType = {
+    addItem: (newItemTitle: string) => void
 }
 
 
 export function AddItemForm(props: AddItemFormPropsType) {
-
     const [newItemTitle, setNewItemTitle] = useState('')
     const [error, setError] = useState<boolean>(false)
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +31,7 @@ export function AddItemForm(props: AddItemFormPropsType) {
     return (
         <div>
             <input
-                placeholder={'Enter a new title'}
+                placeholder={'Enter a new task'}
                 value={newItemTitle}
                 onChange={onChangeHandler}
                 onKeyPress={onKeyPressHandler}
