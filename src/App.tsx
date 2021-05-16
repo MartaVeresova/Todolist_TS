@@ -48,7 +48,6 @@ function App() {
         setTodoLists(todoLists.filter(tl => tl.id !== todoListId))
         delete tasks[todoListId]
     }
-
     function addTask(title: string, todoListId: string) {
         const newTask: TasksPropsType = {
             id: v1(),
