@@ -1,4 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import {Input} from '@material-ui/core';
 
 export type EditableSpanPropsType = {
     title: string
@@ -26,7 +27,8 @@ export function EditableSpan(props: EditableSpanPropsType) {
     }
     return (
         editMode
-            ? <input
+            ? <Input
+                color={'primary'}
                 value={itemTitle}
                 onChange={onChangeHandler}
                 autoFocus
