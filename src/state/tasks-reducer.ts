@@ -1,7 +1,14 @@
-import {TasksStateType} from '../App';
-import {TasksPropsType} from '../Todolist';
 import {v1} from 'uuid';
-import {ADD_NEW_TODOLIST, AddNewTodoListType, REMOVE_TODOLIST, RemoveTodoListType} from './todoLists-reducer';
+import {
+    ADD_NEW_TODOLIST,
+    AddNewTodoListType,
+    REMOVE_TODOLIST,
+    RemoveTodoListType,
+    todoListID1,
+    todoListID2
+} from './todoLists-reducer';
+import {TasksStateType} from '../AppWithRedux';
+import {TasksPropsType} from '../Todolist';
 
 export const REMOVE_TASK = 'REMOVE-TASK'
 export const ADD_NEW_TASK = 'ADD-NEW-TASK'
@@ -41,7 +48,22 @@ export type ActionsType =
     | RemoveTodoListType
 
 
-export const tasksReducer = (state: TasksStateType, action: ActionsType): TasksStateType => {
+const initialState: TasksStateType = {
+    [todoListID1]: [
+        {id: v1(), title: 'HTML&CSS', isDone: true}, //t
+        {id: v1(), title: 'JS', isDone: true}, //t
+        {id: v1(), title: 'React', isDone: false}, //t
+        {id: v1(), title: 'Redux', isDone: false}, //t
+    ],
+    [todoListID2]: [
+        {id: v1(), title: 'HTML&CSS', isDone: true}, //t
+        {id: v1(), title: 'JS', isDone: true}, //t
+        {id: v1(), title: 'React', isDone: false}, //t
+        {id: v1(), title: 'Redux', isDone: false}, //t
+    ],
+}
+
+export const tasksReducer = (state: TasksStateType = initialState, action: ActionsType): TasksStateType => {
 
     switch (action.type) {
 
@@ -63,10 +85,12 @@ export const tasksReducer = (state: TasksStateType, action: ActionsType): TasksS
             }
 
         case CHANGE_TASK_STATUS:
-            let task = state[action.todoListId].find(t => t.id === action.taskId)
-            task && (task.isDone = action.newIsDoneChecked)
             return {
-                ...state
+                ...state,
+                [action.todoListId]: state[action.todoListId].map(t => t.id === action.taskId ? {
+                    ...t,
+                    isDone: action.newIsDoneChecked
+                } : t)
             }
 
         case CHANGE_TASK_TITLE:
