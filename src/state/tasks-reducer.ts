@@ -1,12 +1,5 @@
 import {v1} from 'uuid';
-import {
-    ADD_NEW_TODOLIST,
-    AddNewTodoListType,
-    REMOVE_TODOLIST,
-    RemoveTodoListType,
-    todoListID1,
-    todoListID2
-} from './todoLists-reducer';
+import {ADD_NEW_TODOLIST, AddNewTodoListType, REMOVE_TODOLIST, RemoveTodoListType,} from './todoLists-reducer';
 import {TasksStateType} from '../AppWithRedux';
 import {TasksPropsType} from '../Todolist';
 

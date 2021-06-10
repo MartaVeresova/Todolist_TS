@@ -31,9 +31,6 @@ export type ActionsType =
     | ChangeTodoListTitleType
     | ChangeTodoListFilterType
 
-export const todoListID1 = v1()
-export const todoListID2 = v1()
-
 const initialState: Array<TodoListsType> = []
 
 export type InitialTodoListsStateType = typeof initialState
