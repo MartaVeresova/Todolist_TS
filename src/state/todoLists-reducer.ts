@@ -34,10 +34,7 @@ export type ActionsType =
 export const todoListID1 = v1()
 export const todoListID2 = v1()
 
-const initialState: Array<TodoListsType> = [
-    {id: todoListID1, title: 'What to learn', filter: 'all'},
-    {id: todoListID2, title: 'What to buy', filter: 'all'},
-]
+const initialState: Array<TodoListsType> = []
 
 export type InitialTodoListsStateType = typeof initialState
 
