@@ -1,4 +1,4 @@
-import {FilterValuesType, TodoListsType} from '../AppWithRedux';
+import {FilterValuesType, TodoListsType} from '../App';
 import {v1} from 'uuid';
 
 export const REMOVE_TODOLIST = 'REMOVE-TODOLIST'

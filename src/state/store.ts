@@ -2,7 +2,7 @@ import {combineReducers, createStore} from 'redux';
 import {tasksReducer} from './tasks-reducer';
 import {todoListsReducer} from './todoLists-reducer';
 
-export type AppRootState = ReturnType<typeof rootReducers>
+export type AppRootStateType = ReturnType<typeof rootReducers>
 
 const rootReducers = combineReducers({
     todoLists: todoListsReducer,

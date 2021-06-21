@@ -1,6 +1,6 @@
 import {v1} from 'uuid';
 import {ADD_NEW_TODOLIST, AddNewTodoListType, REMOVE_TODOLIST, RemoveTodoListType,} from './todoLists-reducer';
-import {TasksStateType} from '../AppWithRedux';
+import {TasksStateType} from '../App';
 import {TasksPropsType} from '../Todolist';
 
 export const REMOVE_TASK = 'REMOVE-TASK'
