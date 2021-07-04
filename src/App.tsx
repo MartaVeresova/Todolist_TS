@@ -1,29 +1,23 @@
 import React, {useCallback} from 'react';
 import './App.css';
-import {TasksPropsType, Todolist} from './Todolist';
+import { Todolist} from './Todolist';
 import {AddItemForm} from './AddItemForm';
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
 import {
     addNewTodoListAC,
     changeTodoListFilterAC,
-    changeTodoListTitleAC,
+    changeTodoListTitleAC, FilterValuesType,
     InitialTodoListsStateType,
     removeTodoListAC
 } from './state/todoLists-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from './state/store';
+import {TaskType} from './api/todolist-api';
 
 
-export type FilterValuesType = 'all' | 'active' | 'completed'
-
-export type TodoListsType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
 export type TasksStateType = {
-    [key: string]: Array<TasksPropsType>
+    [key: string]: Array<TaskType>
 }
 
 function App() {
