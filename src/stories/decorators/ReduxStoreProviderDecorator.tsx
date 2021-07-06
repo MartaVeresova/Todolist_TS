@@ -19,7 +19,7 @@ const initialGlobalState: AppRootStateType = {
     tasks: {
         ['todoListId1']: [
             {
-                taskId: '1',
+                id: '1',
                 todoListId: 'todoListId1',
                 title: 'HTML',
                 description: '',
@@ -31,7 +31,7 @@ const initialGlobalState: AppRootStateType = {
                 addedDate: '',
             },
             {
-                taskId: '2',
+                id: '2',
                 todoListId: 'todoListId1',
                 title: 'JS',
                 description: '',
@@ -45,7 +45,7 @@ const initialGlobalState: AppRootStateType = {
         ],
         ['todoListId2']: [
             {
-                taskId: '3',
+                id: '3',
                 todoListId: 'todoListId2',
                 title: 'Milk',
                 description: '',
@@ -57,7 +57,7 @@ const initialGlobalState: AppRootStateType = {
                 addedDate: '',
             },
             {
-                taskId: '4',
+                id: '4',
                 todoListId: 'todoListId2',
                 title: 'React Book',
                 description: '',

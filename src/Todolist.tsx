@@ -1,11 +1,11 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
 import {Button, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from './state/store';
-import {addNewTaskAC} from './state/tasks-reducer';
+import {addNewTaskTC, fetchTasksTC} from './state/tasks-reducer';
 import {Task} from './Task';
 import {TaskStatuses, TaskType} from './api/todolist-api';
 import {FilterValuesType} from './state/todoLists-reducer';
@@ -29,9 +29,12 @@ export const Todolist = React.memo(({
                                         title,
                                         filter
                                     }: TodolistPropsType) => {
-
     const tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[todoListId])
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchTasksTC(todoListId))
+    }, [])
 
     const getTaskForTodoList = () => {
         switch (filter) {
@@ -45,20 +48,24 @@ export const Todolist = React.memo(({
     }
     const newTasks = getTaskForTodoList()
 
-
     const onAllClickHandler = useCallback(() => {
         changeFilter('all', todoListId)
     }, [changeFilter, todoListId])
+
     const onActiveClickHandler = useCallback(() => {
         changeFilter('active', todoListId)
     }, [changeFilter, todoListId])
+
     const onCompletedClickHandler = useCallback(() => {
         changeFilter('completed', todoListId)
     }, [changeFilter, todoListId])
+
     const onClickRemoveTodolist = useCallback(() => {
         removeTodolist(todoListId)
     }, [removeTodolist, todoListId])
-    const addNewTask = useCallback((newItemTitle: string) => dispatch(addNewTaskAC(newItemTitle, todoListId)), [dispatch, todoListId])
+
+    const addNewTask = useCallback((newItemTitle: string) => dispatch(addNewTaskTC(todoListId, newItemTitle)), [dispatch, todoListId])
+
     const onChangeTodoListTitle = useCallback((changedTitle: string) => changeTodoListTitle(changedTitle, todoListId), [changeTodoListTitle, todoListId])
 
     return (
@@ -75,7 +82,7 @@ export const Todolist = React.memo(({
                     newTasks.map(t => {
                         return (
                             <Task
-                                key={t.taskId}
+                                key={t.id}
                                 todoListId={todoListId}
                                 task={t}
                             />

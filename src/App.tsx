@@ -1,15 +1,17 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import { Todolist} from './Todolist';
+import {Todolist} from './Todolist';
 import {AddItemForm} from './AddItemForm';
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
 import {
-    addNewTodoListAC,
+    addTodoListTC,
     changeTodoListFilterAC,
-    changeTodoListTitleAC, FilterValuesType,
+    changeTodoListTitleTC,
+    fetchTodoListsTC,
+    FilterValuesType,
     InitialTodoListsStateType,
-    removeTodoListAC
+    removeTodoListTC
 } from './state/todoLists-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from './state/store';
@@ -25,16 +27,20 @@ function App() {
     const todoLists = useSelector<AppRootStateType, InitialTodoListsStateType>(state => state.todoLists)
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        dispatch(fetchTodoListsTC())
+    }, [])
+
     function removeTodolist(todoListId: string) {
-        dispatch(removeTodoListAC(todoListId))
+        dispatch(removeTodoListTC(todoListId))
     }
 
     const addTodoList = useCallback((title: string) => {
-        dispatch(addNewTodoListAC(title))
+        dispatch(addTodoListTC(title))
     }, [dispatch])
 
     function changeTodoListTitle(title: string, todoListId: string) {
-        dispatch(changeTodoListTitleAC(title, todoListId))
+        dispatch(changeTodoListTitleTC(todoListId, title))
     }
 
     function changeFilter(value: FilterValuesType, todoListId: string) {
