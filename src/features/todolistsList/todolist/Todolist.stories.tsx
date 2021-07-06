@@ -1,12 +1,12 @@
 import React from 'react';
 import {Meta, Story} from '@storybook/react';
-import {ReduxStoreProviderDecorator} from './decorators/ReduxStoreProviderDecorator';
-import {Todolist, TodolistPropsType} from '../Todolist';
+import {ReduxStoreProviderDecorator} from '../../../stories/decorators/ReduxStoreProviderDecorator';
 import {action} from '@storybook/addon-actions';
+import {TodoList, TodoListPropsType} from './Todolist';
 
 export default {
     title: 'TODOLISTS/Todolist',
-    component: Todolist,
+    component: TodoList,
     decorators: [ReduxStoreProviderDecorator],
 } as Meta;
 
@@ -21,7 +21,7 @@ const baseArgs = {
     changeTodoListTitle: changeTodoListTitleCallback,
 }
 
-const Template: Story<TodolistPropsType> = (args) => <Todolist {...args} />;
+const Template: Story<TodoListPropsType> = (args) => <TodoList {...args} />;
 
 export const TodolistFilterAllExample = Template.bind({});
 TodolistFilterAllExample.args = {
