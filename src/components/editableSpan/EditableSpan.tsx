@@ -14,6 +14,9 @@ export const EditableSpan = React.memo(({title, onChangeTitle}: EditableSpanProp
 
     const offEditMode = useCallback(() => {
         setEditMode(false)
+        if (itemTitle.length > 100) {
+            setItemTitle(title)
+        }
         onChangeTitle(itemTitle)
     }, [onChangeTitle, itemTitle])
 

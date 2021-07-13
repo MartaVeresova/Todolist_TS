@@ -10,7 +10,8 @@ import {
     InitialTodoListsStateType,
     removeTodoListTC
 } from './todoLists-reducer';
-import {Grid, Paper} from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import {AddItemForm} from '../../components/addItemForm/AddItemForm';
 import {TodoList} from './todolist/Todolist';
 
@@ -53,8 +54,9 @@ export const TodoListsList: React.FC = () => {
                                 <TodoList
                                     todoListId={tl.id}
                                     title={tl.title}
-                                    changeFilter={changeFilter}
                                     filter={tl.filter}
+                                    entityStatus={tl.entityStatus}
+                                    changeFilter={changeFilter}
                                     removeTodolist={removeTodolist}
                                     changeTodoListTitle={changeTodoListTitle}
                                 />

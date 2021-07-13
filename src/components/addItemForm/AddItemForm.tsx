@@ -4,10 +4,11 @@ import {AddBox} from '@material-ui/icons';
 
 export type AddItemFormPropsType = {
     addItem: (newItemTitle: string) => void
+    disabled?: boolean
 }
 
 
-export const AddItemForm = React.memo(({addItem}: AddItemFormPropsType) => {
+export const AddItemForm = React.memo(({addItem, disabled}: AddItemFormPropsType) => {
     const [newItemTitle, setNewItemTitle] = useState('')
     const [error, setError] = useState<boolean>(false)
 
@@ -43,8 +44,9 @@ export const AddItemForm = React.memo(({addItem}: AddItemFormPropsType) => {
                 helperText={error && 'Title is required!'}
                 size={'small'}
                 onBlur={() => setError(false)}
+                disabled={disabled}
             />
-            <IconButton onClick={onClickAddItem}>
+            <IconButton onClick={onClickAddItem} disabled={disabled}>
                 <AddBox/>
             </IconButton>
         </div>

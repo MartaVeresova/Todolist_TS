@@ -37,7 +37,7 @@ export const todoListApi = {
 }
 
 //types
-type CommonResponseType<T = {}> = {
+export type CommonResponseType<T = {}> = {
     resultCode: 0 | 1 | 10
     fieldsErrors: string[]
     messages: string[]
@@ -61,6 +61,11 @@ export enum TaskPriorities {
     Hi = 2,
     Urgently = 3,
     Later = 4,
+}
+export enum ResponseStatuses {
+    succeeded = 0,
+    error = 1,
+    captcha = 10,
 }
 export type TaskType = {
     todoListId: string

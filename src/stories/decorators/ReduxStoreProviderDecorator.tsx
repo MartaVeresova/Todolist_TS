@@ -5,16 +5,18 @@ import {combineReducers, createStore} from 'redux';
 import {tasksReducer} from '../../features/todolistsList/tasks-reducer';
 import {todoListsReducer} from '../../features/todolistsList/todoLists-reducer';
 import {TaskPriorities, TaskStatuses} from '../../api/todolist-api';
+import {appReducer} from '../../app/app-reducer';
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
-    todoLists: todoListsReducer
+    todoLists: todoListsReducer,
+    app: appReducer,
 })
-
+// @ts-ignore
 const initialGlobalState: AppRootStateType = {
     todoLists: [
-        {id: 'todoListId1', title: 'What to learn', addedDate: '', order: 0, filter: 'all'},
-        {id: 'todoListId2', title: 'What to buy', addedDate: '', order: 0, filter: 'all'}
+        {id: 'todoListId1', title: 'What to learn', addedDate: '', order: 0, filter: 'all', entityStatus: 'idle'},
+        {id: 'todoListId2', title: 'What to buy', addedDate: '', order: 0, filter: 'all', entityStatus: 'idle'}
     ],
     tasks: {
         ['todoListId1']: [
@@ -29,6 +31,7 @@ const initialGlobalState: AppRootStateType = {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
+                //entityStatus: 'idle',
             },
             {
                 id: '2',
@@ -41,6 +44,7 @@ const initialGlobalState: AppRootStateType = {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
+                //entityStatus: 'idle',
             }
         ],
         ['todoListId2']: [
@@ -55,6 +59,7 @@ const initialGlobalState: AppRootStateType = {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
+                //entityStatus: 'idle',
             },
             {
                 id: '4',
@@ -67,6 +72,7 @@ const initialGlobalState: AppRootStateType = {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
+                //entityStatus: 'idle',
             }
         ]
     }
