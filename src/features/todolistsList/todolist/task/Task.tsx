@@ -4,12 +4,13 @@ import {Checkbox, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
 import {useDispatch} from 'react-redux';
 import {removeTaskTC, updateTaskTC} from '../../tasks-reducer';
-import {TaskStatuses, TaskType} from '../../../../api/todolist-api';
+import {TaskStatuses} from '../../../../api/todolist-api';
 import {RequestStatusType} from '../../../../app/app-reducer';
+import {TaskDomainType} from '../../../../app/App';
 
 export type TaskPropsType = {
     todoListId: string
-    task: TaskType
+    task: TaskDomainType
     entityStatus: RequestStatusType
 }
 
@@ -34,10 +35,12 @@ export const Task = React.memo(({todoListId, task, entityStatus}: TaskPropsType)
                     color={'primary'}
                     checked={task.status === TaskStatuses.Completed}
                     onChange={onChangeChecked}
+                    disabled={entityStatus === 'loading'}
                 />
                 <EditableSpan
                     title={task.title}
                     onChangeTitle={onChangeTitle}
+                    disabled={entityStatus === 'loading'}
                 />
             </span>
             <IconButton

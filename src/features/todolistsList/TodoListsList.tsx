@@ -16,6 +16,7 @@ import {AddItemForm} from '../../components/addItemForm/AddItemForm';
 import {TodoList} from './todolist/Todolist';
 
 
+
 export const TodoListsList: React.FC = () => {
     //BLL
     const todoLists = useSelector<AppRootStateType, InitialTodoListsStateType>(state => state.todoLists)
@@ -23,7 +24,7 @@ export const TodoListsList: React.FC = () => {
 
     useEffect(() => {
         dispatch(fetchTodoListsTC())
-    }, [])
+    }, [dispatch])
 
     function removeTodolist(todoListId: string) {
         dispatch(removeTodoListTC(todoListId))

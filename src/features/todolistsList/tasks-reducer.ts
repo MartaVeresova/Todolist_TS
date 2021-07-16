@@ -2,7 +2,7 @@ import {AddNewTodoListActionType, RemoveTodoListActionType, SetTodoListsActionTy
 import {TasksStateType} from '../../app/App';
 import {ResponseStatuses, TaskType, todoListApi, UpdateTaskModelType} from '../../api/todolist-api';
 import {AppRootStateType, AppThunk} from '../../app/store';
-import {SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from '../../app/app-reducer';
+import {RequestStatusType, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from '../../app/app-reducer';
 import {AxiosError} from 'axios';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 
@@ -18,7 +18,7 @@ export const tasksReducer = (state = initialState, action: TasksActionsType): Ta
         case 'TASKS/SET-TASKS':
             return {
                 ...state,
-                [action.todoListId]: action.tasks
+                [action.todoListId]: action.tasks.map(t => ({...t, entityStatus: 'succeeded'}))
             }
 
         case 'TODO/SET-TODOLISTS':
@@ -32,20 +32,9 @@ export const tasksReducer = (state = initialState, action: TasksActionsType): Ta
             }
 
         case 'TASKS/ADD-NEW-TASK':
-            // {
-            //     const stateCopy = {...state}
-            //     const newTask = action.task
-            //
-            //     const tasks = stateCopy[newTask.todoListId];
-            //     const newTasks = [newTask, ...tasks];
-            //     stateCopy[newTask.todoListId] = newTasks;
-            //
-            //     return stateCopy;
-            // }
-
             return {
                 ...state,
-                [action.task.todoListId]: [action.task, ...state[action.task.todoListId]]
+                [action.task.todoListId]: [{...action.task, entityStatus: 'succeeded'}, ...state[action.task.todoListId]]
             }
 
         case 'TASKS/CHANGE-TASK':
@@ -68,13 +57,13 @@ export const tasksReducer = (state = initialState, action: TasksActionsType): Ta
             delete stateCopy[action.id]
             return stateCopy
 
-        // case 'CHANGE-TASK-ENTITY-STATUS':
-        //     return {
-        //         ...state,
-        //         [action.todoListId]: state[action.todoListId].map(t => t.id === action.taskId ? {
-        //             ...t, entityStatus: action.entityStatus
-        //         } : t)
-        //     }
+        case 'CHANGE-TASK-ENTITY-STATUS':
+            return {
+                ...state,
+                [action.todoListId]: state[action.todoListId].map(t => t.id === action.taskId ? {
+                    ...t, entityStatus: action.entityStatus
+                } : t)
+            }
 
         default:
             return state
@@ -94,8 +83,8 @@ export const addNewTaskAC = (task: TaskType) =>
 export const changeTaskAC = (taskId: string, model: UpdateDomainTaskModelType, todoListId: string) =>
     ({type: 'TASKS/CHANGE-TASK', taskId, model, todoListId} as const)
 
-// export const changeTaskEntityStatusAC = (entityStatus: RequestStatusType, todoListId: string, taskId: string) =>
-//     ({type: 'CHANGE-TASK-ENTITY-STATUS', entityStatus, todoListId, taskId} as const)
+export const changeTaskEntityStatusAC = (entityStatus: RequestStatusType, todoListId: string, taskId: string) =>
+    ({type: 'CHANGE-TASK-ENTITY-STATUS', entityStatus, todoListId, taskId} as const)
 
 
 //thunks
@@ -110,7 +99,7 @@ export const fetchTasksTC = (todoListId: string): AppThunk => dispatch => {
 
 export const removeTaskTC = (todolistId: string, taskId: string): AppThunk => dispatch => {
     dispatch(setAppStatusAC('loading'))
-    //dispatch(changeTaskEntityStatusAC('loading', todolistId, taskId))
+    dispatch(changeTaskEntityStatusAC('loading', todolistId, taskId))
     todoListApi.deleteTask(todolistId, taskId)
         .then((res) => {
             if (res.data.resultCode === ResponseStatuses.succeeded) {
@@ -171,16 +160,11 @@ export const updateTaskTC = (todolistId: string, domainModel: UpdateDomainTaskMo
 }
 
 //types
-// export type TasksDomainStateType = TasksStateType & {
-//     entityStatus: RequestStatusType
-// }
-
-
 export type SetTaskActionType = ReturnType<typeof setTasksAC>
 export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
 export type AddNewTaskActionType = ReturnType<typeof addNewTaskAC>
 export type ChangeTaskActionType = ReturnType<typeof changeTaskAC>
-// export type ChangeTaskEntityStatusActionType = ReturnType<typeof changeTaskEntityStatusAC>
+export type ChangeTaskEntityStatusActionType = ReturnType<typeof changeTaskEntityStatusAC>
 
 export type TasksActionsType =
     | SetTaskActionType
@@ -192,7 +176,7 @@ export type TasksActionsType =
     | SetTodoListsActionType
     | SetAppStatusActionType
     | SetAppErrorActionType
-    // | ChangeTaskEntityStatusActionType
+    | ChangeTaskEntityStatusActionType
 
 
 type UpdateDomainTaskModelType = {

@@ -15,17 +15,6 @@ import {AppRootStateType} from './store';
 import {RequestStatusType} from './app-reducer';
 import {ErrorSnackbar} from '../components/errorSnackbar/ErrorSnackbar';
 
-// export type TaskDomainType = TaskType & {
-//     entityStatus: RequestStatusType
-// }
-//
-// export type TasksStateType = {
-//     [key: string]: Array<TaskDomainType>
-// }
-
-export type TasksStateType = {
-    [key: string]: Array<TaskType>
-}
 
 function App() {
 
@@ -62,3 +51,11 @@ function App() {
 }
 
 export default App
+
+//types
+export type TaskDomainType = TaskType & {
+    entityStatus: RequestStatusType
+}
+export type TasksStateType = {
+    [key: string]: Array<TaskDomainType>
+}

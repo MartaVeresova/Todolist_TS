@@ -25,6 +25,7 @@ TaskIsDoneExample.args = {
         startDate: '',
         deadline: '',
         addedDate: '',
+        entityStatus: 'idle',
     },
     todoListId: 'todoListId1',
 };
@@ -42,6 +43,7 @@ TaskIsNotDoneExample.args = {
         startDate: '',
         deadline: '',
         addedDate: '',
+        entityStatus: 'idle',
     },
     todoListId: 'todoListId2',
 };

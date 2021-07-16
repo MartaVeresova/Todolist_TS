@@ -8,9 +8,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../../app/store';
 import {addNewTaskTC, fetchTasksTC} from '../tasks-reducer';
 import {Task} from './task/Task';
-import {TaskStatuses, TaskType} from '../../../api/todolist-api';
+import {TaskStatuses} from '../../../api/todolist-api';
 import {FilterValuesType} from '../todoLists-reducer';
 import {RequestStatusType} from '../../../app/app-reducer';
+import {TaskDomainType} from '../../../app/App';
 
 
 export type TodoListPropsType = {
@@ -33,12 +34,12 @@ export const TodoList = React.memo(({
                                         filter,
                                         entityStatus
                                     }: TodoListPropsType) => {
-    const tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[todoListId])
+    const tasks = useSelector<AppRootStateType, Array<TaskDomainType>>(state => state.tasks[todoListId])
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(fetchTasksTC(todoListId))
-    }, [])
+    }, [dispatch, todoListId])
 
     const getTaskForTodoList = () => {
         switch (filter) {
@@ -78,6 +79,7 @@ export const TodoList = React.memo(({
                 <EditableSpan
                     title={title}
                     onChangeTitle={onChangeTodoListTitle}
+                    disabled={entityStatus === 'loading'}
                 />
                 <IconButton
                     onClick={onClickRemoveTodolist}
@@ -98,7 +100,7 @@ export const TodoList = React.memo(({
                                 key={t.id}
                                 todoListId={todoListId}
                                 task={t}
-                                entityStatus={entityStatus}
+                                entityStatus={t.entityStatus}
                             />
                         )
                     })

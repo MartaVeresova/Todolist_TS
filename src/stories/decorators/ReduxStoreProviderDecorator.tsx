@@ -31,7 +31,7 @@ const initialGlobalState: AppRootStateType = {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
-                //entityStatus: 'idle',
+                entityStatus: 'idle',
             },
             {
                 id: '2',
@@ -44,7 +44,7 @@ const initialGlobalState: AppRootStateType = {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
-                //entityStatus: 'idle',
+                entityStatus: 'idle',
             }
         ],
         ['todoListId2']: [
@@ -59,7 +59,7 @@ const initialGlobalState: AppRootStateType = {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
-                //entityStatus: 'idle',
+                entityStatus: 'idle',
             },
             {
                 id: '4',
@@ -72,7 +72,7 @@ const initialGlobalState: AppRootStateType = {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
-                //entityStatus: 'idle',
+                entityStatus: 'idle',
             }
         ]
     }
