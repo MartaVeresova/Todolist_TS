@@ -1,4 +1,11 @@
-import {addNewTaskAC, changeTaskAC, removeTaskAC, setTasksAC, tasksReducer} from './tasks-reducer';
+import {
+    addNewTaskAC,
+    changeTaskAC,
+    changeTaskEntityStatusAC,
+    removeTaskAC,
+    setTasksAC,
+    tasksReducer
+} from './tasks-reducer';
 import {TasksStateType} from '../../app/App';
 import {addNewTodoListAC, removeTodoListAC, setTodoListsAC} from './todoLists-reducer';
 import {TaskPriorities, TaskStatuses} from '../../api/todolist-api';
@@ -18,6 +25,7 @@ beforeEach(() => {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
+                entityStatus: 'idle',
             },
             {
                 id: '2',
@@ -30,6 +38,7 @@ beforeEach(() => {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
+                entityStatus: 'idle',
             },
             {
                 id: '3',
@@ -42,6 +51,7 @@ beforeEach(() => {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
+                entityStatus: 'idle',
             }
         ],
         'todolistId2': [
@@ -56,6 +66,7 @@ beforeEach(() => {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
+                entityStatus: 'idle',
             },
             {
                 id: '2',
@@ -68,6 +79,7 @@ beforeEach(() => {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
+                entityStatus: 'idle',
             },
             {
                 id: '3',
@@ -80,6 +92,7 @@ beforeEach(() => {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
+                entityStatus: 'idle',
             }
         ]
     }
@@ -129,6 +142,7 @@ test('empty arrays should be added, when we set todoLists', () => {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
+                entityStatus: 'idle',
             },
             {
                 id: '2',
@@ -141,6 +155,7 @@ test('empty arrays should be added, when we set todoLists', () => {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
+                entityStatus: 'idle',
             },
             {
                 id: '3',
@@ -153,6 +168,7 @@ test('empty arrays should be added, when we set todoLists', () => {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
+                entityStatus: 'idle',
             }
         ],
         'todolistId2': [
@@ -167,6 +183,7 @@ test('empty arrays should be added, when we set todoLists', () => {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
+                entityStatus: 'idle',
             },
             {
                 id: '3',
@@ -179,6 +196,7 @@ test('empty arrays should be added, when we set todoLists', () => {
                 startDate: '',
                 deadline: '',
                 addedDate: '',
+                entityStatus: 'idle',
             }
         ]
     });
@@ -237,7 +255,6 @@ test('new array should be added when new todolist is added', () => {
 
     const endState = tasksReducer(startState, action)
 
-
     const keys = Object.keys(endState);
     const newKey = keys.find(k => k != 'todolistId1' && k != 'todolistId2');
     if (!newKey) {
@@ -258,4 +275,13 @@ test('property with todolistId should be deleted', () => {
 
     expect(keys.length).toBe(1);
     expect(endState['todolistId2']).toBeUndefined();
+});
+
+test('correct entity status of task should be changed', () => {
+    const action = changeTaskEntityStatusAC('loading', 'todolistId2', '1');
+
+    const endState = tasksReducer(startState, action)
+
+    expect(endState['todolistId2'][0].entityStatus).toBe('loading');
+    expect(endState['todolistId1'][0].entityStatus).toBe('idle');
 });

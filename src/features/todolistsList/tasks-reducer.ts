@@ -18,7 +18,7 @@ export const tasksReducer = (state = initialState, action: TasksActionsType): Ta
         case 'TASKS/SET-TASKS':
             return {
                 ...state,
-                [action.todoListId]: action.tasks.map(t => ({...t, entityStatus: 'succeeded'}))
+                [action.todoListId]: action.tasks.map(t => ({...t, entityStatus: 'idle'}))
             }
 
         case 'TODO/SET-TODOLISTS':
@@ -34,7 +34,7 @@ export const tasksReducer = (state = initialState, action: TasksActionsType): Ta
         case 'TASKS/ADD-NEW-TASK':
             return {
                 ...state,
-                [action.task.todoListId]: [{...action.task, entityStatus: 'succeeded'}, ...state[action.task.todoListId]]
+                [action.task.todoListId]: [{...action.task, entityStatus: 'idle'}, ...state[action.task.todoListId]]
             }
 
         case 'TASKS/CHANGE-TASK':
