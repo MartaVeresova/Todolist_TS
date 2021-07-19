@@ -1,8 +1,6 @@
 import {ResponseStatuses, todoListApi, TodoListType} from '../../api/todolist-api';
-import {Dispatch} from 'redux';
-import {AppActionsType, AppThunk} from '../../app/store';
+import {AppThunk} from '../../app/store';
 import {RequestStatusType, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from '../../app/app-reducer';
-import {AxiosError} from 'axios';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 
 
@@ -59,63 +57,63 @@ export const changeTodolistEntityStatusAC = (entityStatus: RequestStatusType, id
 
 
 //thunks
-export const fetchTodoListsTC = () => (dispatch: Dispatch<AppActionsType>) => {
-    dispatch(setAppStatusAC('loading'))
-    todoListApi.getTodos()
-        .then(res => {
-            dispatch(setTodoListsAC(res.data))
-            dispatch(setAppStatusAC('succeeded'))
-        })
-}
+export const fetchTodoListsTC = (): AppThunk =>
+    async dispatch => {
+        dispatch(setAppStatusAC('loading'))
+        const res = await todoListApi.getTodos()
+        dispatch(setTodoListsAC(res.data))
+        dispatch(setAppStatusAC('succeeded'))
+    }
 
-export const removeTodoListTC = (id: string): AppThunk => dispatch => {
-    dispatch(setAppStatusAC('loading'))
-    dispatch(changeTodolistEntityStatusAC('loading', id))
-    todoListApi.deleteTodo(id)
-        .then(res => {
+export const removeTodoListTC = (id: string): AppThunk =>
+    async dispatch => {
+        dispatch(setAppStatusAC('loading'))
+        dispatch(changeTodolistEntityStatusAC('loading', id))
+        try {
+            const res = await todoListApi.deleteTodo(id)
             if (res.data.resultCode === ResponseStatuses.succeeded) {
                 dispatch(removeTodoListAC(id))
                 dispatch(setAppStatusAC('succeeded'))
             } else {
                 handleServerAppError(dispatch, res.data)
             }
-        })
-        .catch((err: AxiosError) => {
+        } catch (err) {
             handleServerNetworkError(dispatch, err.message)
-        })
-}
+        }
+    }
 
-export const addTodoListTC = (title: string): AppThunk => dispatch => {
-    dispatch(setAppStatusAC('loading'))
-    todoListApi.createTodo(title)
-        .then(res => {
+export const addTodoListTC = (title: string): AppThunk =>
+    async dispatch => {
+        dispatch(setAppStatusAC('loading'))
+        try {
+            const res = await todoListApi.createTodo(title)
             if (res.data.resultCode === ResponseStatuses.succeeded) {
                 dispatch(addNewTodoListAC(res.data.data.item))
                 dispatch(setAppStatusAC('succeeded'))
             } else {
                 handleServerAppError(dispatch, res.data)
             }
-        })
-        .catch((err: AxiosError) => {
+        } catch (err) {
             handleServerNetworkError(dispatch, err.message)
-        })
-}
+        }
+    }
 
-export const changeTodoListTitleTC = (id: string, title: string): AppThunk => dispatch => {
-    dispatch(setAppStatusAC('loading'))
-    todoListApi.updateTodoTitle(id, title)
-        .then((res) => {
+
+export const changeTodoListTitleTC = (id: string, title: string): AppThunk =>
+    async dispatch => {
+        dispatch(setAppStatusAC('loading'))
+        try {
+            const res = await todoListApi.updateTodoTitle(id, title)
             if (res.data.resultCode === ResponseStatuses.succeeded) {
                 dispatch(changeTodoListTitleAC(title, id))
                 dispatch(setAppStatusAC('succeeded'))
             } else {
                 handleServerAppError(dispatch, res.data)
             }
-        })
-        .catch((err: AxiosError) => {
+        } catch (err) {
             handleServerNetworkError(dispatch, err.message)
-        })
-}
+        }
+    }
 
 //types
 export type FilterValuesType = 'all' | 'active' | 'completed'
