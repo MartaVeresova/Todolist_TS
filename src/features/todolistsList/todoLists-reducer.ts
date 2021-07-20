@@ -102,23 +102,6 @@ export const addTodoListTC = (title: string): AppThunk =>
         }
     }
 
-// export const addTodoListTC = (title: string): AppThunk => dispatch => {
-//     dispatch(setAppStatusAC('loading'))
-//     todoListApi.createTodo(title)
-//         .then(res => {
-//             if (res.data.resultCode === ResponseStatuses.succeeded) {
-//                 dispatch(addNewTodoListAC(res.data.data.item))
-//                 dispatch(setAppStatusAC('succeeded'))
-//             } else {
-//                 handleServerAppError(dispatch, res.data)
-//             }
-//         })
-//         .catch((err: AxiosError) => {
-//             handleServerNetworkError(dispatch, err.message)
-//         })
-// }
-
-
 export const changeTodoListTitleTC = (id: string, title: string): AppThunk =>
     async dispatch => {
         dispatch(setAppStatusAC('loading'))

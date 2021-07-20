@@ -7,7 +7,7 @@ export type EditableSpanPropsType = {
     onChangeTitle: (changedTitle: string) => void
 }
 
-export const EditableSpan = React.memo(({title, disabled, onChangeTitle}: EditableSpanPropsType) => {
+export const EditableSpan = React.memo(({title, disabled = false, onChangeTitle}: EditableSpanPropsType) => {
     const [editMode, setEditMode] = useState(false)
     const [itemTitle, setItemTitle] = useState(title)
 

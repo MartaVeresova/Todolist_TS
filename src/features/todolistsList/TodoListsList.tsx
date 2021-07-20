@@ -17,14 +17,18 @@ import {TodoList} from './todolist/Todolist';
 import {Redirect} from 'react-router-dom';
 
 
-export const TodoListsList: React.FC = () => {
+type PropsType = {
+    demo?: boolean
+}
 
+export const TodoListsList: React.FC<PropsType> = React.memo(({demo = false}) => {
+    console.log('TodoListsList')
     const dispatch = useDispatch()
     const todoLists = useSelector<AppRootStateType, InitialTodoListsStateType>(state => state.todoLists)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     useEffect(() => {
-        if (!isLoggedIn) {
+        if (demo || !isLoggedIn) {
             return
         }
         dispatch(fetchTodoListsTC())
@@ -62,13 +66,12 @@ export const TodoListsList: React.FC = () => {
                         <Grid item key={tl.id}>
                             <Paper elevation={4} style={{padding: '15px'}}>
                                 <TodoList
-                                    todoListId={tl.id}
-                                    title={tl.title}
-                                    filter={tl.filter}
+                                    todoList={tl}
                                     entityStatus={tl.entityStatus}
                                     changeFilter={changeFilter}
                                     removeTodolist={removeTodolist}
                                     changeTodoListTitle={changeTodoListTitle}
+                                    demo={demo}
                                 />
                             </Paper>
                         </Grid>
@@ -77,4 +80,4 @@ export const TodoListsList: React.FC = () => {
             }
         </Grid>
     </>
-}
+})

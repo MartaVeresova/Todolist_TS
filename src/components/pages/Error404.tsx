@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 import Error404Img from '../../assets/images/Error404.png'
 import Button from '@material-ui/core/Button';
 import s from './Error404.module.css'
@@ -12,9 +12,9 @@ export const Error404 = () => {
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const history = useHistory()
 
-    const onClickHandler = () => {
+    const onClickHandler = useCallback(() => {
         history.push(`/`);
-    }
+    }, [])
 
     return (
         <div className={s.container}>

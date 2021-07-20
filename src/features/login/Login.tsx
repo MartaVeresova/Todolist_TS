@@ -14,7 +14,8 @@ import {AppRootStateType} from '../../app/store';
 import FormLabel from '@material-ui/core/FormLabel';
 
 
-export const Login = () => {
+export const Login = React.memo(() => {
+    console.log('Login')
     const dispatch = useDispatch()
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
@@ -87,16 +88,24 @@ export const Login = () => {
                             control={
                                 <Checkbox
                                     {...formik.getFieldProps('rememberMe')}
+                                    checked={formik.values.rememberMe}
                                 />
                             }
                         />
-                        <Button type={'submit'} variant={'contained'} color={'primary'}>Login</Button>
+                        <Button
+                            type={'submit'}
+                            variant={'contained'}
+                            color={'primary'}
+                            //disabled={!!formik.errors}
+                        >
+                            Login
+                        </Button>
                     </FormGroup>
                 </FormControl>
             </form>
         </Grid>
     </Grid>
-}
+})
 
 
 //types

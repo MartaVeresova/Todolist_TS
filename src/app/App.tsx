@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
@@ -21,8 +21,12 @@ import {CircularProgress} from '@material-ui/core';
 import {logoutTC} from '../features/login/auth-reducer';
 
 
-function App() {
+type PropsType = {
+    demo?: boolean
+}
 
+function App({demo = false}: PropsType) {
+    console.log('App')
     const dispatch = useDispatch()
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
@@ -32,15 +36,16 @@ function App() {
         dispatch(initializeAppTC())
     }, [dispatch])
 
+    const onClickHandler = useCallback(() => {
+        dispatch(logoutTC())
+    }, [dispatch])
+
+
     if (!isInitialized) {
         return <div
             style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
         </div>
-    }
-
-    const onClickHandler = () => {
-        dispatch(logoutTC())
     }
 
     return (
@@ -68,7 +73,7 @@ function App() {
 
             <Container fixed>
                 <Switch>
-                    <Route exact path={'/'} render={() => <TodoListsList/>}/>
+                    <Route exact path={'/'} render={() => <TodoListsList demo={demo}/>}/>
                     <Route path={'/login'} render={() => <Login/>}/>
                     <Route path={'/404'} render={() => <Error404/>}/>
                     <Redirect from={'*'} to={'/404'}/>

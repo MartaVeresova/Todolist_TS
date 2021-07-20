@@ -1,10 +1,4 @@
-import {
-    SetAppErrorActionType,
-    setAppStatusAC,
-    SetAppStatusActionType,
-    setIsInitializedAC,
-    SetIsInitializedActionType
-} from '../../app/app-reducer'
+import {SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from '../../app/app-reducer'
 import {AppThunk} from '../../app/store';
 import {authApi, LoginParamsType, ResponseStatuses} from '../../api/todolist-api';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
@@ -12,7 +6,7 @@ import {handleServerAppError, handleServerNetworkError} from '../../utils/error-
 const initialState = {
     isLoggedIn: false
 }
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 
 export const authReducer = (state: InitialStateType = initialState, action: AuthActionsType): InitialStateType => {
 

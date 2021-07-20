@@ -25,16 +25,26 @@ const Template: Story<TodoListPropsType> = (args) => <TodoList {...args} />;
 
 export const TodolistFilterAllExample = Template.bind({});
 TodolistFilterAllExample.args = {
-    todoListId: 'todoListId2',
-    title: 'React Book',
-    filter: 'all',
+    todoList: {
+        id: 'todoListId1',
+        title: 'HTML',
+        entityStatus: 'idle',
+        filter: 'all',
+        order: 0,
+        addedDate: ''
+    },
     ...baseArgs,
 };
 
 export const TodolistFilterCompletedExample = Template.bind({});
 TodolistFilterCompletedExample.args = {
-    todoListId: 'todoListId1',
-    title: 'JS',
-    filter: 'completed',
+    todoList: {
+        id: 'todoListId2',
+        title: 'Milk',
+        entityStatus: 'idle',
+        filter: 'completed',
+        order: 0,
+        addedDate: ''
+    },
     ...baseArgs,
 };

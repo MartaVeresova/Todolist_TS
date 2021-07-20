@@ -9,40 +9,42 @@ import {AppRootStateType} from '../../../app/store';
 import {addNewTaskTC, fetchTasksTC} from '../tasks-reducer';
 import {Task} from './task/Task';
 import {TaskStatuses} from '../../../api/todolist-api';
-import {FilterValuesType} from '../todoLists-reducer';
+import {FilterValuesType, TodoListDomainType} from '../todoLists-reducer';
 import {RequestStatusType} from '../../../app/app-reducer';
 import {TaskDomainType} from '../../../app/App';
 
 
 export type TodoListPropsType = {
-    todoListId: string
-    title: string
-    filter: FilterValuesType
+    todoList: TodoListDomainType
     entityStatus: RequestStatusType
     changeFilter: (value: FilterValuesType, todoListId: string) => void
     removeTodolist: (todoListId: string) => void
     changeTodoListTitle: (title: string, todoListId: string) => void
+    demo?: boolean
 }
 
 
 export const TodoList = React.memo(({
-                                        todoListId,
+                                        todoList,
                                         changeTodoListTitle,
                                         removeTodolist,
                                         changeFilter,
-                                        title,
-                                        filter,
-                                        entityStatus
+                                        entityStatus,
+                                        demo = false,
                                     }: TodoListPropsType) => {
-    const tasks = useSelector<AppRootStateType, Array<TaskDomainType>>(state => state.tasks[todoListId])
+    console.log('TodoList')
+    const tasks = useSelector<AppRootStateType, Array<TaskDomainType>>(state => state.tasks[todoList.id])
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchTasksTC(todoListId))
-    }, [dispatch, todoListId])
+        if (demo) {
+            return;
+        }
+        dispatch(fetchTasksTC(todoList.id))
+    }, [dispatch, todoList])
 
     const getTaskForTodoList = () => {
-        switch (filter) {
+        switch (todoList.filter) {
             case 'active':
                 return tasks.filter(t => t.status === TaskStatuses.New)
             case 'completed':
@@ -54,30 +56,30 @@ export const TodoList = React.memo(({
     const newTasks = getTaskForTodoList()
 
     const onAllClickHandler = useCallback(() => {
-        changeFilter('all', todoListId)
-    }, [changeFilter, todoListId])
+        changeFilter('all', todoList.id)
+    }, [changeFilter, todoList.id])
 
     const onActiveClickHandler = useCallback(() => {
-        changeFilter('active', todoListId)
-    }, [changeFilter, todoListId])
+        changeFilter('active', todoList.id)
+    }, [changeFilter, todoList.id])
 
     const onCompletedClickHandler = useCallback(() => {
-        changeFilter('completed', todoListId)
-    }, [changeFilter, todoListId])
+        changeFilter('completed', todoList.id)
+    }, [changeFilter, todoList.id])
 
     const onClickRemoveTodolist = useCallback(() => {
-        removeTodolist(todoListId)
-    }, [removeTodolist, todoListId])
+        removeTodolist(todoList.id)
+    }, [removeTodolist, todoList.id])
 
-    const addNewTask = useCallback((newItemTitle: string) => dispatch(addNewTaskTC(todoListId, newItemTitle)), [dispatch, todoListId])
+    const addNewTask = useCallback((newItemTitle: string) => dispatch(addNewTaskTC(todoList.id, newItemTitle)), [dispatch, todoList.id])
 
-    const onChangeTodoListTitle = useCallback((changedTitle: string) => changeTodoListTitle(changedTitle, todoListId), [changeTodoListTitle, todoListId])
+    const onChangeTodoListTitle = useCallback((changedTitle: string) => changeTodoListTitle(changedTitle, todoList.id), [changeTodoListTitle, todoList.id])
 
     return (
         <div>
             <h3>
                 <EditableSpan
-                    title={title}
+                    title={todoList.title}
                     onChangeTitle={onChangeTodoListTitle}
                     disabled={entityStatus === 'loading'}
                 />
@@ -98,7 +100,7 @@ export const TodoList = React.memo(({
                         return (
                             <Task
                                 key={t.id}
-                                todoListId={todoListId}
+                                todoListId={todoList.id}
                                 task={t}
                                 entityStatus={t.entityStatus}
                             />
@@ -108,7 +110,7 @@ export const TodoList = React.memo(({
             </ul>
             <div>
                 <Button
-                    variant={filter === 'all' ? 'contained' : 'outlined'}
+                    variant={todoList.filter === 'all' ? 'contained' : 'outlined'}
                     size={'small'}
                     color={'primary'}
                     onClick={onAllClickHandler}
@@ -117,7 +119,7 @@ export const TodoList = React.memo(({
                 </Button>
                 <Button
                     style={{marginLeft: '3px'}}
-                    variant={filter === 'active' ? 'contained' : 'outlined'}
+                    variant={todoList.filter === 'active' ? 'contained' : 'outlined'}
                     size={'small'}
                     color={'primary'}
                     onClick={onActiveClickHandler}
@@ -126,7 +128,7 @@ export const TodoList = React.memo(({
                 </Button>
                 <Button
                     style={{marginLeft: '3px'}}
-                    variant={filter === 'completed' ? 'contained' : 'outlined'}
+                    variant={todoList.filter === 'completed' ? 'contained' : 'outlined'}
                     size={'small'}
                     color={'primary'}
                     onClick={onCompletedClickHandler}

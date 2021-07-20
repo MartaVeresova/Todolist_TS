@@ -38,7 +38,7 @@ export const todoListApi = {
 
 export const authApi = {
     login(data: LoginParamsType) {
-        return instance.post<CommonResponseType<{ userId: number }>>(`/auth/login`, data)
+        return instance.post<CommonResponseType<{ userId?: number }>>(`/auth/login`, data)
     },
     me() {
         return instance.get<CommonResponseType<AuthMeResponseType>>(`/auth/me`)
