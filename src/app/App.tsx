@@ -14,6 +14,9 @@ import {useSelector} from 'react-redux';
 import {AppRootStateType} from './store';
 import {RequestStatusType} from './app-reducer';
 import {ErrorSnackbar} from '../components/errorSnackbar/ErrorSnackbar';
+import {Redirect, Route, Switch} from 'react-router-dom'
+import {Login} from '../features/Login';
+import {Error404} from '../features/Error404';
 
 
 function App() {
@@ -42,10 +45,15 @@ function App() {
             {status === 'loading' && <LinearProgress color="secondary"/>}
 
             <Container fixed>
-                <TodoListsList/>
+                <Switch>
+                    <Route exact path={'/'} render={() => <TodoListsList/>}/>
+                    <Route path={'/login'} render={() => <Login/>}/>
+                    <Route path={'/404'} render={() => <Error404/>}/>
+                    <Redirect from={'*'} to={'/404'}/>
+                </Switch>
             </Container>
 
-            <ErrorSnackbar />
+            <ErrorSnackbar/>
         </div>
     )
 }

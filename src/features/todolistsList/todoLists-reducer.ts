@@ -2,6 +2,7 @@ import {ResponseStatuses, todoListApi, TodoListType} from '../../api/todolist-ap
 import {AppThunk} from '../../app/store';
 import {RequestStatusType, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from '../../app/app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
+import {AxiosError} from 'axios';
 
 
 const initialState: Array<TodoListDomainType> = []
@@ -97,6 +98,22 @@ export const addTodoListTC = (title: string): AppThunk =>
             handleServerNetworkError(dispatch, err.message)
         }
     }
+
+// export const addTodoListTC = (title: string): AppThunk => dispatch => {
+//     dispatch(setAppStatusAC('loading'))
+//     todoListApi.createTodo(title)
+//         .then(res => {
+//             if (res.data.resultCode === ResponseStatuses.succeeded) {
+//                 dispatch(addNewTodoListAC(res.data.data.item))
+//                 dispatch(setAppStatusAC('succeeded'))
+//             } else {
+//                 handleServerAppError(dispatch, res.data)
+//             }
+//         })
+//         .catch((err: AxiosError) => {
+//             handleServerNetworkError(dispatch, err.message)
+//         })
+// }
 
 
 export const changeTodoListTitleTC = (id: string, title: string): AppThunk =>
