@@ -17,4 +17,6 @@ export const handleServerAppError = <T>(dispatch: Dispatch<ErrorUtilsDispatchTyp
 }
 
 
-type ErrorUtilsDispatchType = | SetAppStatusActionType | SetAppErrorActionType
+type ErrorUtilsDispatchType =
+    | SetAppStatusActionType
+    | SetAppErrorActionType

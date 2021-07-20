@@ -14,17 +14,22 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import {AddItemForm} from '../../components/addItemForm/AddItemForm';
 import {TodoList} from './todolist/Todolist';
-
+import {Redirect} from 'react-router-dom';
 
 
 export const TodoListsList: React.FC = () => {
     //BLL
-    const todoLists = useSelector<AppRootStateType, InitialTodoListsStateType>(state => state.todoLists)
+    debugger
     const dispatch = useDispatch()
+    const todoLists = useSelector<AppRootStateType, InitialTodoListsStateType>(state => state.todoLists)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     useEffect(() => {
+        if (!isLoggedIn) {
+            return
+        }
         dispatch(fetchTodoListsTC())
-    }, [dispatch])
+    }, [dispatch, isLoggedIn])
 
     function removeTodolist(todoListId: string) {
         dispatch(removeTodoListTC(todoListId))
@@ -40,6 +45,12 @@ export const TodoListsList: React.FC = () => {
 
     function changeFilter(value: FilterValuesType, todoListId: string) {
         dispatch(changeTodoListFilterAC(value, todoListId))
+    }
+
+
+    if (!isLoggedIn) {
+        debugger
+        return <Redirect to={'/login'}/>
     }
 
     return <>

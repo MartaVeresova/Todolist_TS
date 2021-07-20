@@ -14,29 +14,29 @@ export const tasksReducer = (state = initialState, action: TasksActionsType): Ta
 
     switch (action.type) {
 
-        case 'TASKS/SET-TASKS':
+        case 'Tasks/SET-TASKS':
             return {
                 ...state,
                 [action.todoListId]: action.tasks.map(t => ({...t, entityStatus: 'idle'}))
             }
 
-        case 'TODO/SET-TODOLISTS':
+        case 'Todo/SET-TODOLISTS':
             action.todoLists.forEach(tl => ({...state[tl.id] = []}))
             return {...state}
 
-        case 'TASKS/REMOVE-TASK':
+        case 'Tasks/REMOVE-TASK':
             return {
                 ...state,
                 [action.todoListId]: state[action.todoListId].filter(t => t.id !== action.taskId)
             }
 
-        case 'TASKS/ADD-NEW-TASK':
+        case 'Tasks/ADD-NEW-TASK':
             return {
                 ...state,
                 [action.task.todoListId]: [{...action.task, entityStatus: 'idle'}, ...state[action.task.todoListId]]
             }
 
-        case 'TASKS/CHANGE-TASK':
+        case 'Tasks/CHANGE-TASK':
             return {
                 ...state,
                 [action.todoListId]: state[action.todoListId].map(t => t.id === action.taskId ? {
@@ -45,18 +45,18 @@ export const tasksReducer = (state = initialState, action: TasksActionsType): Ta
                 } : t)
             }
 
-        case 'TODO/ADD-NEW-TODOLIST':
+        case 'Todo/ADD-NEW-TODOLIST':
             return {
                 ...state,
                 [action.todoList.id]: []
             }
 
-        case 'TODO/REMOVE-TODOLIST':
+        case 'Todo/REMOVE-TODOLIST':
             const stateCopy = {...state}
             delete stateCopy[action.id]
             return stateCopy
 
-        case 'CHANGE-TASK-ENTITY-STATUS':
+        case 'Tasks/CHANGE-TASK-ENTITY-STATUS':
             return {
                 ...state,
                 [action.todoListId]: state[action.todoListId].map(t => t.id === action.taskId ? {
@@ -71,28 +71,32 @@ export const tasksReducer = (state = initialState, action: TasksActionsType): Ta
 
 //actions
 export const setTasksAC = (todoListId: string, tasks: TaskType[]) =>
-    ({type: 'TASKS/SET-TASKS', todoListId, tasks} as const)
+    ({type: 'Tasks/SET-TASKS', todoListId, tasks} as const)
 
 export const removeTaskAC = (taskId: string, todoListId: string) =>
-    ({type: 'TASKS/REMOVE-TASK', taskId, todoListId} as const)
+    ({type: 'Tasks/REMOVE-TASK', taskId, todoListId} as const)
 
 export const addNewTaskAC = (task: TaskType) =>
-    ({type: 'TASKS/ADD-NEW-TASK', task} as const)
+    ({type: 'Tasks/ADD-NEW-TASK', task} as const)
 
 export const changeTaskAC = (taskId: string, model: UpdateDomainTaskModelType, todoListId: string) =>
-    ({type: 'TASKS/CHANGE-TASK', taskId, model, todoListId} as const)
+    ({type: 'Tasks/CHANGE-TASK', taskId, model, todoListId} as const)
 
 export const changeTaskEntityStatusAC = (entityStatus: RequestStatusType, todoListId: string, taskId: string) =>
-    ({type: 'CHANGE-TASK-ENTITY-STATUS', entityStatus, todoListId, taskId} as const)
+    ({type: 'Tasks/CHANGE-TASK-ENTITY-STATUS', entityStatus, todoListId, taskId} as const)
 
 
 //thunks
 export const fetchTasksTC = (todoListId: string): AppThunk =>
     async dispatch => {
         dispatch(setAppStatusAC('loading'))
-        const res = await todoListApi.getTasks(todoListId)
-        dispatch(setTasksAC(todoListId, res.data.items))
-        dispatch(setAppStatusAC('succeeded'))
+        try {
+            const res = await todoListApi.getTasks(todoListId)
+            dispatch(setTasksAC(todoListId, res.data.items))
+            dispatch(setAppStatusAC('succeeded'))
+        } catch (err) {
+            handleServerNetworkError(dispatch, err.message)
+        }
     }
 
 export const removeTaskTC = (todolistId: string, taskId: string): AppThunk =>
