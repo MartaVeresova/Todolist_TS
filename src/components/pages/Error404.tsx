@@ -3,12 +3,13 @@ import Error404Img from '../../assets/images/Error404.png'
 import Button from '@material-ui/core/Button';
 import s from './Error404.module.css'
 import {useHistory} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../app/store';
 
 export const Error404 = () => {
 
-    // const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const dispatch = useDispatch()
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const history = useHistory()
 
     const onClickHandler = () => {

@@ -11,7 +11,7 @@ const initialState = {
     isInitialized: false,
 }
 
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 
 export const appReducer = (state: InitialStateType = initialState, action: AppActionsType): InitialStateType => {
     switch (action.type) {
@@ -23,7 +23,7 @@ export const appReducer = (state: InitialStateType = initialState, action: AppAc
             return {...state, error: action.error}
 
         case 'App/SET-IS-INITIALIZED':
-            return {...state, isInitialized: action.isInitialized}
+            return {...state, isInitialized: action.value}
 
         default:
             return state
@@ -37,8 +37,8 @@ export const setAppStatusAC = (status: RequestStatusType) =>
 export const setAppErrorAC = (error: string | null) =>
     ({type: 'App/SET-ERROR', error} as const)
 
-export const setIsInitializedAC = (isInitialized: boolean) =>
-    ({type: 'App/SET-IS-INITIALIZED', isInitialized} as const)
+export const setIsInitializedAC = (value: boolean) =>
+    ({type: 'App/SET-IS-INITIALIZED', value} as const)
 
 
 //thunks

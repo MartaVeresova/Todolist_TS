@@ -4,7 +4,6 @@ import Checkbox from '@material-ui/core/Checkbox'
 import FormControl from '@material-ui/core/FormControl'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormGroup from '@material-ui/core/FormGroup'
-import FormLabel from '@material-ui/core/FormLabel'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import {useFormik} from 'formik';
@@ -12,6 +11,7 @@ import {loginTC} from './auth-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import {AppRootStateType} from '../../app/store';
+import FormLabel from '@material-ui/core/FormLabel';
 
 
 export const Login = () => {
@@ -51,8 +51,9 @@ export const Login = () => {
         return <Redirect to={'/'}/>
     }
 
-    return <Grid container justify="center">
+    return <Grid container justify="center" style={{padding: '30px 0'}}>
         <Grid item xs={4}>
+            {/*<InfoIcon color={'action'}/>*/}
             <form onSubmit={formik.handleSubmit}>
                 <FormControl>
                     <FormLabel>

@@ -18,16 +18,17 @@ import {Redirect, Route, Switch} from 'react-router-dom'
 import {Login} from '../features/login/Login';
 import {Error404} from '../components/pages/Error404';
 import {CircularProgress} from '@material-ui/core';
+import {logoutTC} from '../features/login/auth-reducer';
 
 
 function App() {
-    debugger
+
     const dispatch = useDispatch()
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     useEffect(() => {
-        debugger
         dispatch(initializeAppTC())
     }, [dispatch])
 
@@ -36,6 +37,10 @@ function App() {
             style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
         </div>
+    }
+
+    const onClickHandler = () => {
+        dispatch(logoutTC())
     }
 
     return (
@@ -48,12 +53,14 @@ function App() {
                     <Typography variant={'h6'}>
                         TodoLists
                     </Typography>
-                    <Button
-                        color={'inherit'}
-                        variant={'outlined'}
-                    >
-                        LogIn
-                    </Button>
+                    {
+                        isLoggedIn && <Button
+                            color={'inherit'}
+                            variant={'outlined'}
+                            onClick={onClickHandler}>
+                            Logout
+                        </Button>
+                    }
                 </Toolbar>
             </AppBar>
 

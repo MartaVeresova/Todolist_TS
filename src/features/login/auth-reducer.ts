@@ -46,6 +46,21 @@ export const loginTC = (data: LoginParamsType): AppThunk =>
         }
     }
 
+export const logoutTC = (): AppThunk =>
+    async dispatch => {
+        dispatch(setAppStatusAC('loading'))
+        try {
+            const res = await authApi.logout()
+            if (res.data.resultCode === ResponseStatuses.succeeded) {
+                dispatch(setIsLoggedInAC(false))
+                dispatch(setAppStatusAC('succeeded'))
+            } else {
+                handleServerAppError(dispatch, res.data)
+            }
+        } catch (err) {
+            handleServerNetworkError(dispatch, err.message)
+        }
+    }
 
 // types
 export type SetIsLoggedInActionType = ReturnType<typeof setIsLoggedInAC>

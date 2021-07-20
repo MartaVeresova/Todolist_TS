@@ -43,6 +43,9 @@ export const authApi = {
     me() {
         return instance.get<CommonResponseType<AuthMeResponseType>>(`/auth/me`)
     },
+    logout() {
+        return instance.delete<CommonResponseType>(`/auth/login`)
+    },
 }
 
 //types

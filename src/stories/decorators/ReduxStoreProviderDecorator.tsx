@@ -6,11 +6,13 @@ import {tasksReducer} from '../../features/todolistsList/tasks-reducer';
 import {todoListsReducer} from '../../features/todolistsList/todoLists-reducer';
 import {TaskPriorities, TaskStatuses} from '../../api/todolist-api';
 import {appReducer} from '../../app/app-reducer';
+import {authReducer} from '../../features/login/auth-reducer';
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todoLists: todoListsReducer,
     app: appReducer,
+    auth: authReducer,
 })
 // @ts-ignore
 const initialGlobalState: AppRootStateType = {

@@ -18,8 +18,7 @@ import {Redirect} from 'react-router-dom';
 
 
 export const TodoListsList: React.FC = () => {
-    //BLL
-    debugger
+
     const dispatch = useDispatch()
     const todoLists = useSelector<AppRootStateType, InitialTodoListsStateType>(state => state.todoLists)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
@@ -49,7 +48,6 @@ export const TodoListsList: React.FC = () => {
 
 
     if (!isLoggedIn) {
-        debugger
         return <Redirect to={'/login'}/>
     }
 
