@@ -23,11 +23,13 @@ type PropsType = {
 
 export const TodoListsList: React.FC<PropsType> = React.memo(({demo = false}) => {
     console.log('TodoListsList')
+    debugger
     const dispatch = useDispatch()
     const todoLists = useSelector<AppRootStateType, InitialTodoListsStateType>(state => state.todoLists)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     useEffect(() => {
+        debugger
         if (demo || !isLoggedIn) {
             return
         }
@@ -52,6 +54,7 @@ export const TodoListsList: React.FC<PropsType> = React.memo(({demo = false}) =>
 
 
     if (!isLoggedIn) {
+        debugger
         return <Redirect to={'/login'}/>
     }
 

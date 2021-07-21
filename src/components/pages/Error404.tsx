@@ -7,7 +7,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../app/store';
 
 export const Error404 = () => {
-
+    console.log('Error404')
+    debugger
     const dispatch = useDispatch()
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const history = useHistory()

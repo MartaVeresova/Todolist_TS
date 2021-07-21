@@ -27,6 +27,7 @@ type PropsType = {
 
 function App({demo = false}: PropsType) {
     console.log('App')
+    debugger
     const dispatch = useDispatch()
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)

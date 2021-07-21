@@ -11,7 +11,9 @@ import {loginTC} from './auth-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import {AppRootStateType} from '../../app/store';
-import FormLabel from '@material-ui/core/FormLabel';
+import {TriggersTooltips} from './InfoIcon';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 
 export const Login = React.memo(() => {
@@ -54,55 +56,53 @@ export const Login = React.memo(() => {
 
     return <Grid container justify="center" style={{padding: '30px 0'}}>
         <Grid item xs={4}>
-            {/*<InfoIcon color={'action'}/>*/}
-            <form onSubmit={formik.handleSubmit}>
-                <FormControl>
-                    <FormLabel>
-                        <p>To log in get registered
-                            <a href={'https://social-network.samuraijs.com/'}
-                               target={'_blank'} rel={'noreferrer'}>here
-                            </a>
-                        </p>
-                        <p>or use common test account credentials:</p>
-                        <p>Email: free@samuraijs.com</p>
-                        <p>Password: free</p>
-                    </FormLabel>
-                    <FormGroup>
-                        <TextField
-                            label="Email"
-                            margin="normal"
-                            {...formik.getFieldProps('email')}
-                        />
-                        {formik.touched.email && formik.errors.email &&
-                        <div style={{'color': 'red'}}>{formik.errors.email}</div>}
-                        <TextField
-                            type="password"
-                            label="Password"
-                            margin="normal"
-                            {...formik.getFieldProps('password')}
-                        />
-                        {formik.touched.password && formik.errors.password &&
-                        <div style={{'color': 'red'}}>{formik.errors.password}</div>}
-                        <FormControlLabel
-                            label={'Remember me'}
-                            control={
-                                <Checkbox
-                                    {...formik.getFieldProps('rememberMe')}
-                                    checked={formik.values.rememberMe}
-                                />
-                            }
-                        />
-                        <Button
-                            type={'submit'}
-                            variant={'contained'}
-                            color={'primary'}
-                            //disabled={!!formik.errors}
-                        >
-                            Login
-                        </Button>
-                    </FormGroup>
-                </FormControl>
-            </form>
+            <Paper elevation={4}
+                   style={{width: '320px', padding: '15px', textAlign: 'center', backgroundColor: '#E6E7FF'}}>
+                <form onSubmit={formik.handleSubmit}>
+                    <FormControl style={{width: '300px'}}>
+                        <Grid item>
+                            <TriggersTooltips/>
+                            <Typography variant={'h4'}>
+                                LOGIN
+                            </Typography>
+                        </Grid>
+                        <FormGroup>
+                            <TextField
+                                label="Email"
+                                margin="normal"
+                                {...formik.getFieldProps('email')}
+                            />
+                            {formik.touched.email && formik.errors.email &&
+                            <div style={{'color': 'red'}}>{formik.errors.email}</div>}
+                            <TextField
+                                type="password"
+                                label="Password"
+                                margin="normal"
+                                {...formik.getFieldProps('password')}
+                            />
+                            {formik.touched.password && formik.errors.password &&
+                            <div style={{'color': 'red'}}>{formik.errors.password}</div>}
+                            <FormControlLabel
+                                label={'Remember me'}
+                                control={
+                                    <Checkbox
+                                        {...formik.getFieldProps('rememberMe')}
+                                        checked={formik.values.rememberMe}
+                                    />
+                                }
+                            />
+                            <Button
+                                type={'submit'}
+                                variant={'contained'}
+                                color={'primary'}
+                                //disabled={!!formik.errors}
+                            >
+                                Login
+                            </Button>
+                        </FormGroup>
+                    </FormControl>
+                </form>
+            </Paper>
         </Grid>
     </Grid>
 })

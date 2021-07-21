@@ -33,6 +33,7 @@ export const TodoList = React.memo(({
                                         demo = false,
                                     }: TodoListPropsType) => {
     console.log('TodoList')
+    debugger
     const tasks = useSelector<AppRootStateType, Array<TaskDomainType>>(state => state.tasks[todoList.id])
     const dispatch = useDispatch()
 
