@@ -23,7 +23,7 @@ export const todoListApi = {
         return instance.put<CommonResponseType>(`/todo-lists/${todolistId}`, {title})
     },
     getTasks(todolistId: string) {
-        return instance.get<GetTasksType>(`/todo-lists/${todolistId}/tasks`)
+        return instance.get<TasksResponseType>(`/todo-lists/${todolistId}/tasks`)
     },
     createTask(todolistId: string, title: string) {
         return instance.post<CommonResponseType<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`, {title})
@@ -95,7 +95,7 @@ export type TaskType = {
     deadline: string
     addedDate: string
 }
-type GetTasksType = {
+type TasksResponseType = {
     items: TaskType[]
     totalCount: number
     error: string | null

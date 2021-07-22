@@ -3,18 +3,18 @@ import Error404Img from '../../assets/images/Error404.png'
 import Button from '@material-ui/core/Button';
 import s from './Error404.module.css'
 import {useHistory} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppRootStateType} from '../../app/store';
+import {useDispatch} from 'react-redux';
+import {initializeAppTC} from '../../app/app-reducer';
 
 export const Error404 = () => {
     console.log('Error404')
-    debugger
+
     const dispatch = useDispatch()
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const history = useHistory()
 
-    const onClickHandler = useCallback(() => {
-        history.push(`/`);
+    const onClickHandler = useCallback(async () => {
+        await dispatch(initializeAppTC())
+        history.push(`/login`);
     }, [])
 
     return (
@@ -26,7 +26,7 @@ export const Error404 = () => {
                 color={'secondary'}
                 onClick={onClickHandler}
             >
-                Take me away
+                Take me back
             </Button>
         </div>
     )

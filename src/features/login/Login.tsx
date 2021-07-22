@@ -11,7 +11,7 @@ import {loginTC} from './auth-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import {AppRootStateType} from '../../app/store';
-import {TriggersTooltips} from './InfoIcon';
+import {TriggersTooltips} from './icon/InfoIcon';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 

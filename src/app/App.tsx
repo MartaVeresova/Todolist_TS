@@ -27,7 +27,7 @@ type PropsType = {
 
 function App({demo = false}: PropsType) {
     console.log('App')
-    debugger
+
     const dispatch = useDispatch()
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
@@ -70,7 +70,7 @@ function App({demo = false}: PropsType) {
                 </Toolbar>
             </AppBar>
 
-            {status === 'loading' && <LinearProgress color="secondary"/>}
+            {status === 'loading' && <LinearProgress color="secondary" style={{position: 'fixed', width: '100%'}}/>}
 
             <Container fixed>
                 <Switch>

@@ -33,7 +33,7 @@ export const TodoList = React.memo(({
                                         demo = false,
                                     }: TodoListPropsType) => {
     console.log('TodoList')
-    debugger
+
     const tasks = useSelector<AppRootStateType, Array<TaskDomainType>>(state => state.tasks[todoList.id])
     const dispatch = useDispatch()
 
@@ -78,7 +78,7 @@ export const TodoList = React.memo(({
 
     return (
         <div>
-            <h3>
+            <h3 style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                 <EditableSpan
                     title={todoList.title}
                     onChangeTitle={onChangeTodoListTitle}

@@ -49,6 +49,7 @@ export const initializeAppTC = (): AppThunk =>
             if (res.data.resultCode === ResponseStatuses.succeeded) {
                 dispatch(setIsLoggedInAC(true))
             } else {
+                dispatch(setIsLoggedInAC(false))
                 handleServerAppError(dispatch, res.data)
             }
             dispatch(setIsInitializedAC(true))
@@ -56,6 +57,7 @@ export const initializeAppTC = (): AppThunk =>
             handleServerNetworkError(dispatch, err.message)
         }
     }
+
 
 //types
 export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>

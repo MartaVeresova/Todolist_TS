@@ -29,8 +29,8 @@ export const Task = React.memo(({todoListId, task, entityStatus}: TaskPropsType)
     const taskClasses = task.status === TaskStatuses.Completed ? 'isDone' : ''
 
     return (
-        <li key={task.id}>
-            <span className={taskClasses}>
+        <li key={task.id} style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+            <span className={taskClasses} >
                 <Checkbox
                     color={'primary'}
                     checked={task.status === TaskStatuses.Completed}
