@@ -12,6 +12,39 @@ export const todoListsReducer = (state = initialState, action: TodoListsActionsT
 
     switch (action.type) {
 
+        // case 'Todo/SET-TODOLISTS':
+        //     return action.todoLists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
+        //
+        // case 'Todo/REMOVE-TODOLIST':
+        //     return state.filter(tl => tl.id !== action.id)
+        //
+        // case 'Todo/ADD-NEW-TODOLIST':
+        //
+        //
+        // case 'Todo/CHANGE-TODOLIST-TITLE':
+        //
+        // case 'Todo/CHANGE-TODOLIST-FILTER':
+        //
+        // case 'Todo/CHANGE-TODOLIST-ENTITY-STATUS':
+        //
+        //
+        //
+        //
+        //
+        //
+
+
+
+
+
+
+
+
+
+
+
+
+
         case 'Todo/SET-TODOLISTS':
             return action.todoLists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
 
@@ -25,11 +58,10 @@ export const todoListsReducer = (state = initialState, action: TodoListsActionsT
             return state.map(tl => tl.id === action.id ? {...tl, title: action.title} : tl)
 
         case 'Todo/CHANGE-TODOLIST-FILTER':
-            return state.map(tl => tl.id === action.id ? {...tl, filter: action.value} : tl)
+            return state.map(tl => tl.id === action.id ? {...tl, filter: action.filter} : tl)
 
         case 'Todo/CHANGE-TODOLIST-ENTITY-STATUS':
             return state.map(tl => tl.id === action.id ? {...tl, entityStatus: action.entityStatus} : tl)
-
 
         default:
             return state
@@ -49,8 +81,8 @@ export const addNewTodoListAC = (todoList: TodoListType) =>
 export const changeTodoListTitleAC = (title: string, id: string) =>
     ({type: 'Todo/CHANGE-TODOLIST-TITLE', title, id} as const)
 
-export const changeTodoListFilterAC = (value: FilterValuesType, id: string) =>
-    ({type: 'Todo/CHANGE-TODOLIST-FILTER', value, id} as const)
+export const changeTodoListFilterAC = (filter: FilterValuesType, id: string) =>
+    ({type: 'Todo/CHANGE-TODOLIST-FILTER', filter, id} as const)
 
 export const changeTodolistEntityStatusAC = (entityStatus: RequestStatusType, id: string) =>
     ({type: 'Todo/CHANGE-TODOLIST-ENTITY-STATUS', entityStatus, id} as const)
@@ -59,12 +91,15 @@ export const changeTodolistEntityStatusAC = (entityStatus: RequestStatusType, id
 //thunks
 export const fetchTodoListsTC = (): AppThunk =>
     async dispatch => {
+    debugger
         dispatch(setAppStatusAC('loading'))
         try {
+        debugger
             const res = await todoListApi.getTodos()
             dispatch(setTodoListsAC(res.data))
             dispatch(setAppStatusAC('succeeded'))
         } catch (err) {
+        debugger
             handleServerNetworkError(dispatch, err.message)
         }
     }

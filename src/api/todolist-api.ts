@@ -41,6 +41,7 @@ export const authApi = {
         return instance.post<CommonResponseType<{ userId?: number }>>(`/auth/login`, data)
     },
     me() {
+        debugger
         return instance.get<CommonResponseType<AuthMeResponseType>>(`/auth/me`)
     },
     logout() {

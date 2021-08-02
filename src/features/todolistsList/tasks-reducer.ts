@@ -14,13 +14,38 @@ export const tasksReducer = (state = initialState, action: TasksActionsType): Ta
 
     switch (action.type) {
 
+        // case 'Todo/SET-TODOLISTS':
+        //     action.todoLists.forEach(tl => ({...state[tl.id] = []}))
+        //     return {...state}
+        //
+        // case 'Tasks/SET-TASKS':
+        //     return {
+        //         [action.todoListId]: action.tasks.map(t => ({...t, entityStatus: 'idle'}))
+        //     }
+        //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         case 'Tasks/SET-TASKS':
+
             return {
                 ...state,
                 [action.todoListId]: action.tasks.map(t => ({...t, entityStatus: 'idle'}))
             }
 
         case 'Todo/SET-TODOLISTS':
+
             action.todoLists.forEach(tl => ({...state[tl.id] = []}))
             return {...state}
 
@@ -89,12 +114,15 @@ export const changeTaskEntityStatusAC = (entityStatus: RequestStatusType, todoLi
 //thunks
 export const fetchTasksTC = (todoListId: string): AppThunk =>
     async dispatch => {
+        debugger
         dispatch(setAppStatusAC('loading'))
         try {
+            debugger
             const res = await todoListApi.getTasks(todoListId)
             dispatch(setTasksAC(todoListId, res.data.items))
             dispatch(setAppStatusAC('succeeded'))
         } catch (err) {
+            debugger
             handleServerNetworkError(dispatch, err.message)
         }
     }

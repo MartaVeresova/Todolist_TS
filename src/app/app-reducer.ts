@@ -1,7 +1,7 @@
 import {AppThunk} from './store';
 import {authApi, ResponseStatuses} from '../api/todolist-api';
-import {handleServerAppError, handleServerNetworkError} from '../utils/error-utils';
 import {setIsLoggedInAC, SetIsLoggedInActionType} from '../features/login/auth-reducer';
+import {handleServerNetworkError} from '../utils/error-utils';
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -23,7 +23,7 @@ export const appReducer = (state: InitialStateType = initialState, action: AppAc
             return {...state, error: action.error}
 
         case 'App/SET-IS-INITIALIZED':
-            return {...state, isInitialized: action.value}
+            return {...state, isInitialized: action.isInitialized}
 
         default:
             return state
@@ -37,23 +37,29 @@ export const setAppStatusAC = (status: RequestStatusType) =>
 export const setAppErrorAC = (error: string | null) =>
     ({type: 'App/SET-ERROR', error} as const)
 
-export const setIsInitializedAC = (value: boolean) =>
-    ({type: 'App/SET-IS-INITIALIZED', value} as const)
+export const setIsInitializedAC = (isInitialized: boolean) =>
+    ({type: 'App/SET-IS-INITIALIZED', isInitialized} as const)
 
 
 //thunks
 export const initializeAppTC = (): AppThunk =>
     async dispatch => {
+    debugger
         try {
+        debugger
             const res = await authApi.me()
             if (res.data.resultCode === ResponseStatuses.succeeded) {
+                debugger
                 dispatch(setIsLoggedInAC(true))
             } else {
+                debugger
                 dispatch(setIsLoggedInAC(false))
-                handleServerAppError(dispatch, res.data)
+                dispatch(setAppStatusAC('failed'))
+                // handleServerAppError(dispatch, res.data)
             }
             dispatch(setIsInitializedAC(true))
         } catch (err) {
+        debugger
             handleServerNetworkError(dispatch, err.message)
         }
     }

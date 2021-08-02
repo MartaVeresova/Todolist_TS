@@ -15,7 +15,7 @@ export const Error404 = () => {
     const onClickHandler = useCallback(async () => {
         await dispatch(initializeAppTC())
         history.push(`/login`);
-    }, [])
+    }, [dispatch, history])
 
     return (
         <div className={s.container}>

@@ -27,13 +27,17 @@ type PropsType = {
 
 function App({demo = false}: PropsType) {
     console.log('App')
-
+    debugger
     const dispatch = useDispatch()
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+    console.log('App Status ' + status)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+    console.log('App isInitialized ' + isInitialized)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    console.log('App isLoggedIn ' + isLoggedIn)
 
     useEffect(() => {
+        debugger
         dispatch(initializeAppTC())
     }, [dispatch])
 
@@ -43,12 +47,13 @@ function App({demo = false}: PropsType) {
 
 
     if (!isInitialized) {
+        debugger
         return <div
             style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
         </div>
     }
-
+    debugger
     return (
         <div>
             <AppBar position={'static'}>
