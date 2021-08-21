@@ -44,22 +44,17 @@ export const setIsInitializedAC = (isInitialized: boolean) =>
 //thunks
 export const initializeAppTC = (): AppThunk =>
     async dispatch => {
-    debugger
         try {
-        debugger
             const res = await authApi.me()
             if (res.data.resultCode === ResponseStatuses.succeeded) {
-                debugger
                 dispatch(setIsLoggedInAC(true))
             } else {
-                debugger
-                dispatch(setIsLoggedInAC(false))
-                dispatch(setAppStatusAC('failed'))
+                dispatch(setIsLoggedInAC(false)) //в данном приложении не нужен, т.к. и initialState === false
+                dispatch(setAppStatusAC('failed')) //тоже нет необходимости
                 // handleServerAppError(dispatch, res.data)
             }
             dispatch(setIsInitializedAC(true))
         } catch (err) {
-        debugger
             handleServerNetworkError(dispatch, err.message)
         }
     }

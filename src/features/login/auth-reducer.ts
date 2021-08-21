@@ -23,13 +23,12 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
 export const setIsLoggedInAC = (isLoggedIn: boolean) =>
     ({type: 'login/SET-IS-LOGGED-IN', isLoggedIn} as const)
 
+
 // thunks
 export const loginTC = (data: LoginParamsType): AppThunk =>
     async dispatch => {
-    debugger
         dispatch(setAppStatusAC('loading'))
         try {
-        debugger
             const res = await authApi.login(data)
             if (res.data.resultCode === ResponseStatuses.succeeded) {
                 dispatch(setIsLoggedInAC(true))

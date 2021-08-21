@@ -23,18 +23,16 @@ type PropsType = {
 
 export const TodoListsList: React.FC<PropsType> = React.memo(({demo = false}) => {
     console.log('TodoListsList')
-    debugger
     const dispatch = useDispatch()
     const todoLists = useSelector<AppRootStateType, InitialTodoListsStateType>(state => state.todoLists)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     useEffect(() => {
-        debugger
-        // if (demo || !isLoggedIn) {
-        //     return
-        // }
+        if (demo || !isLoggedIn) {
+            return
+        }
         dispatch(fetchTodoListsTC())
-    }, [dispatch])
+    }, [dispatch, isLoggedIn, demo])
 
     function removeTodolist(todoListId: string) {
         dispatch(removeTodoListTC(todoListId))
@@ -53,7 +51,6 @@ export const TodoListsList: React.FC<PropsType> = React.memo(({demo = false}) =>
     }
 
     if (!isLoggedIn) {
-        debugger
         return <Redirect to={'/login'}/>
     }
 
@@ -64,7 +61,6 @@ export const TodoListsList: React.FC<PropsType> = React.memo(({demo = false}) =>
         <Grid container spacing={3}>
             {
                 todoLists.map(tl => {
-                    debugger
                     return (
                         <Grid item key={tl.id}>
                             <Paper elevation={4} style={{padding: '15px'}}>

@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import {Menu} from '@material-ui/icons';
+import Menu from '@material-ui/icons/Menu';
 import {TaskType} from '../api/todolist-api';
 import {TodoListsList} from '../features/todolistsList/TodoListsList';
 import {useDispatch, useSelector} from 'react-redux';
@@ -17,7 +17,7 @@ import {ErrorSnackbar} from '../components/errorSnackbar/ErrorSnackbar';
 import {Redirect, Route, Switch} from 'react-router-dom'
 import {Login} from '../features/login/Login';
 import {Error404} from '../components/pages/Error404';
-import {CircularProgress} from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import {logoutTC} from '../features/login/auth-reducer';
 
 
@@ -27,7 +27,6 @@ type PropsType = {
 
 function App({demo = false}: PropsType) {
     console.log('App')
-    debugger
     const dispatch = useDispatch()
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     console.log('App Status ' + status)
@@ -37,7 +36,6 @@ function App({demo = false}: PropsType) {
     console.log('App isLoggedIn ' + isLoggedIn)
 
     useEffect(() => {
-        debugger
         dispatch(initializeAppTC())
     }, [dispatch])
 
@@ -47,13 +45,11 @@ function App({demo = false}: PropsType) {
 
 
     if (!isInitialized) {
-        debugger
         return <div
             style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
         </div>
     }
-    debugger
     return (
         <div>
             <AppBar position={'static'}>

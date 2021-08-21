@@ -20,7 +20,7 @@ import {RequestStatusType} from '../../app/app-reducer';
 
 
 export const Login = React.memo(() => {
-
+    console.log('Login')
     const dispatch = useDispatch()
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
@@ -34,13 +34,13 @@ export const Login = React.memo(() => {
         validate: values => {
             const errors: FormikErrorType = {};
             if (!values.email) {
-                errors.email = 'Required';
+                errors.email = 'Email is required';
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
                 errors.email = 'Invalid email address';
             }
 
             if (!values.password) {
-                errors.password = 'Required';
+                errors.password = 'Password is required';
             } else if (values.password.length < 3) {
                 errors.password = 'Must be 3 characters or more.';
             } else if (values.password.length > 15) {
@@ -59,7 +59,6 @@ export const Login = React.memo(() => {
     if (isLoggedIn) {
         return <Redirect to={'/'}/>
     }
-
     return (
         <Container component="main" maxWidth="xs" style={{marginTop: '95px'}}>
             <CssBaseline/>
@@ -80,11 +79,9 @@ export const Login = React.memo(() => {
                         margin="normal"
                         required
                         fullWidth
-                        label="Email Address"
-                        // autoComplete="email"
+                        label="Test Email: free@samuraijs.com"
                         type="email"
                         // autoFocus
-                        // error={!!formik.errors.email}
                         helperText={formik.touched.email && formik.errors.email}
                         error={formik.touched.email && !!formik.errors.email}
                         {...formik.getFieldProps('email')}
@@ -96,9 +93,8 @@ export const Login = React.memo(() => {
                         margin="normal"
                         required
                         fullWidth
-                        label="Password"
+                        label="Test Password: free"
                         type="password"
-                        // error={!!formik.errors.password}
                         helperText={formik.touched.password && formik.errors.password}
                         error={formik.touched.password && !!formik.errors.password}
                         {...formik.getFieldProps('password')}
@@ -123,60 +119,7 @@ export const Login = React.memo(() => {
             </div>
             <ErrorSnackbar/>
         </Container>
-
     )
-
-    // return <Grid container justify="center" style={{padding: '30px 0'}}>
-    //     <Grid item xs={4}>
-    //         <Paper elevation={4}
-    //                style={{width: '320px', padding: '15px', textAlign: 'center', backgroundColor: '#E6E7FF'}}>
-    //             <form onSubmit={formik.handleSubmit}>
-    //                 <FormControl style={{width: '300px'}}>
-    //                     <Grid item>
-    //                         <TriggersTooltips/>
-    //                         <Typography variant={'h4'}>
-    //                             LOGIN
-    //                         </Typography>
-    //                     </Grid>
-    //                     <FormGroup>
-    //                         <TextField
-    //                             label="Email"
-    //                             margin="normal"
-    //                             {...formik.getFieldProps('email')}
-    //                         />
-    //                         {formik.touched.email && formik.errors.email &&
-    //                         <div style={{'color': 'red'}}>{formik.errors.email}</div>}
-    //                         <TextField
-    //                             type="password"
-    //                             label="Password"
-    //                             margin="normal"
-    //                             {...formik.getFieldProps('password')}
-    //                         />
-    //                         {formik.touched.password && formik.errors.password &&
-    //                         <div style={{'color': 'red'}}>{formik.errors.password}</div>}
-    //                         <FormControlLabel
-    //                             label={'Remember me'}
-    //                             control={
-    //                                 <Checkbox
-    //                                     {...formik.getFieldProps('rememberMe')}
-    //                                     checked={formik.values.rememberMe}
-    //                                 />
-    //                             }
-    //                         />
-    //                         <Button
-    //                             type={'submit'}
-    //                             variant={'contained'}
-    //                             color={'primary'}
-    //                             //disabled={!!formik.errors}
-    //                         >
-    //                             Login
-    //                         </Button>
-    //                     </FormGroup>
-    //                 </FormControl>
-    //             </form>
-    //         </Paper>
-    //     </Grid>
-    // </Grid>
 })
 
 const useStyles = makeStyles((theme) => ({

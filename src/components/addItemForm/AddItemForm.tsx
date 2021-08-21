@@ -9,8 +9,10 @@ export type AddItemFormPropsType = {
 
 
 export const AddItemForm = React.memo(({addItem, disabled = false}: AddItemFormPropsType) => {
+    console.log('AddItemForm')
+
     const [newItemTitle, setNewItemTitle] = useState('')
-    const [error, setError] = useState<boolean>(false)
+    const [error, setError] = useState(false)
 
     const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setNewItemTitle(e.currentTarget.value)
@@ -29,7 +31,6 @@ export const AddItemForm = React.memo(({addItem, disabled = false}: AddItemFormP
     const onKeyPressHandler = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
         (e.key === 'Enter') && onClickAddItem()
     }, [onClickAddItem])
-
 
     return (
         <div>

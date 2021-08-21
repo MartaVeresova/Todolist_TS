@@ -3,13 +3,11 @@ import {Dispatch} from 'redux';
 import {CommonResponseType} from '../api/todolist-api';
 
 export const handleServerNetworkError = (dispatch: Dispatch<ErrorUtilsDispatchType>, message: string) => {
-    debugger
     dispatch(setAppErrorAC(message))
     dispatch(setAppStatusAC('failed'))
 }
 
 export const handleServerAppError = <T>(dispatch: Dispatch<ErrorUtilsDispatchType>, data: CommonResponseType<T>) => {
-    debugger
     if (data.messages.length) {
         dispatch(setAppErrorAC(data.messages[0]))
     } else {

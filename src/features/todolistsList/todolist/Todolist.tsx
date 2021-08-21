@@ -9,7 +9,7 @@ import {AppRootStateType} from '../../../app/store';
 import {addNewTaskTC, fetchTasksTC} from '../tasks-reducer';
 import {Task} from './task/Task';
 import {TaskStatuses} from '../../../api/todolist-api';
-import {FilterValuesType, TodoListDomainType} from '../todoLists-reducer';
+import {FilterValuesType, removeTodoListTC, TodoListDomainType} from '../todoLists-reducer';
 import {RequestStatusType} from '../../../app/app-reducer';
 import {TaskDomainType} from '../../../app/App';
 
@@ -33,12 +33,10 @@ export const TodoList = React.memo(({
                                         demo = false,
                                     }: TodoListPropsType) => {
     console.log('TodoList')
-    debugger
     const tasks = useSelector<AppRootStateType, Array<TaskDomainType>>(state => state.tasks[todoList.id])
     const dispatch = useDispatch()
 
     useEffect(() => {
-        debugger
         if (demo) {
             return;
         }
@@ -70,13 +68,15 @@ export const TodoList = React.memo(({
     }, [changeFilter, todoList.id])
 
     const onClickRemoveTodolist = useCallback(() => {
-        removeTodolist(todoList.id)
+        dispatch(removeTodoListTC(todoList.id))
+        // removeTodolist(todoList.id)
     }, [removeTodolist, todoList.id])
 
-    const addNewTask = useCallback((newItemTitle: string) => dispatch(addNewTaskTC(todoList.id, newItemTitle)), [dispatch, todoList.id])
+    const addNewTask = useCallback((newItemTitle: string) => {
+        dispatch(addNewTaskTC(todoList.id, newItemTitle))
+    }, [dispatch, todoList.id])
 
     const onChangeTodoListTitle = useCallback((changedTitle: string) => changeTodoListTitle(changedTitle, todoList.id), [changeTodoListTitle, todoList.id])
-
     return (
         <div>
             <h3 style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>

@@ -3,19 +3,14 @@ import Error404Img from '../../assets/images/Error404.png'
 import Button from '@material-ui/core/Button';
 import s from './Error404.module.css'
 import {useHistory} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
-import {initializeAppTC} from '../../app/app-reducer';
 
 export const Error404 = () => {
-    console.log('Error404')
 
-    const dispatch = useDispatch()
     const history = useHistory()
 
-    const onClickHandler = useCallback(async () => {
-        await dispatch(initializeAppTC())
-        history.push(`/login`);
-    }, [dispatch, history])
+    const onClickHandler = useCallback(() => {
+        history.goBack();
+    }, [history])
 
     return (
         <div className={s.container}>

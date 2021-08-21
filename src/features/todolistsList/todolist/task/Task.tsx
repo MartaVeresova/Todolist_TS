@@ -16,9 +16,14 @@ export type TaskPropsType = {
 
 
 export const Task = React.memo(({todoListId, task, entityStatus}: TaskPropsType) => {
+    console.log('Task')
     const dispatch = useDispatch()
 
-    const onRemoveHandler = useCallback(() => dispatch(removeTaskTC(todoListId, task.id)), [dispatch, task, todoListId])
+    const onRemoveHandler = useCallback(() => {
+        return dispatch(removeTaskTC(todoListId, task.id))
+    }, [dispatch, task, todoListId])
+
+    // dispatch(removeTaskTC(todoListId, task.id)), [dispatch, task, todoListId])
 
     const onChangeChecked = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         dispatch(updateTaskTC(todoListId, {status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New}, task.id))
@@ -30,7 +35,7 @@ export const Task = React.memo(({todoListId, task, entityStatus}: TaskPropsType)
 
     return (
         <li key={task.id} style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-            <span className={taskClasses} >
+            <span className={taskClasses}>
                 <Checkbox
                     color={'primary'}
                     checked={task.status === TaskStatuses.Completed}

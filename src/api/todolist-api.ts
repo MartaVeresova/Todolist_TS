@@ -4,7 +4,7 @@ const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1',
     withCredentials: true,
     headers: {
-        'api-key': '56cc9d09-6ac5-48a7-98d1-6f7ea21ef704',
+        'api-key': 'a53e0f65-c3ac-4834-99fc-a88db669947f',
     },
 })
 
@@ -41,7 +41,6 @@ export const authApi = {
         return instance.post<CommonResponseType<{ userId?: number }>>(`/auth/login`, data)
     },
     me() {
-        debugger
         return instance.get<CommonResponseType<AuthMeResponseType>>(`/auth/me`)
     },
     logout() {
