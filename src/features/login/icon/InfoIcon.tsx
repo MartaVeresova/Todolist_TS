@@ -1,15 +1,14 @@
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import InfoIcon from '@material-ui/icons/Info';
 
-export const TriggersTooltips = () => {
-    console.log('TriggersTooltips')
+
+export const TriggersTooltips: FC = () => {
+
     const [open, setOpen] = useState(false);
 
-    const handleTooltipOpen = () => {
-        setOpen(!open);
-    }
+    const handleTooltipOpen = () => setOpen(!open)
 
 
     return (

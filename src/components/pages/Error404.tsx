@@ -1,16 +1,15 @@
-import React, {useCallback} from 'react'
+import React, {FC, useCallback} from 'react'
 import Error404Img from '../../assets/images/Error404.png'
 import Button from '@material-ui/core/Button';
 import s from './Error404.module.css'
 import {useHistory} from 'react-router-dom';
 
-export const Error404 = () => {
+export const Error404: FC = () => {
 
     const history = useHistory()
 
-    const onClickHandler = useCallback(() => {
-        history.goBack();
-    }, [history])
+    const onClickHandler = useCallback(() =>
+        history.goBack(), [history])
 
     return (
         <div className={s.container}>
@@ -21,7 +20,7 @@ export const Error404 = () => {
                 color={'secondary'}
                 onClick={onClickHandler}
             >
-                Take me back
+                Back
             </Button>
         </div>
     )

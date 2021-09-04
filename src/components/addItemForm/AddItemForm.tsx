@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from 'react';
+import React, {ChangeEvent, FC, KeyboardEvent, memo, useCallback, useState} from 'react';
 import {IconButton, TextField} from '@material-ui/core';
 import {AddBox} from '@material-ui/icons';
 
@@ -8,8 +8,7 @@ export type AddItemFormPropsType = {
 }
 
 
-export const AddItemForm = React.memo(({addItem, disabled = false}: AddItemFormPropsType) => {
-    console.log('AddItemForm')
+export const AddItemForm: FC<AddItemFormPropsType> = memo(({addItem, disabled = false}) => {
 
     const [newItemTitle, setNewItemTitle] = useState('')
     const [error, setError] = useState(false)
@@ -28,9 +27,8 @@ export const AddItemForm = React.memo(({addItem, disabled = false}: AddItemFormP
         setNewItemTitle('')
     }, [addItem, newItemTitle])
 
-    const onKeyPressHandler = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
-        (e.key === 'Enter') && onClickAddItem()
-    }, [onClickAddItem])
+    const onKeyPressHandler = useCallback((e: KeyboardEvent<HTMLInputElement>) =>
+        (e.key === 'Enter') && onClickAddItem(), [onClickAddItem])
 
     return (
         <div>

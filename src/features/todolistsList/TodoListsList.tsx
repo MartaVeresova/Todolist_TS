@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {FC, memo, useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../app/store';
 import {
@@ -21,8 +21,8 @@ type PropsType = {
     demo?: boolean
 }
 
-export const TodoListsList: React.FC<PropsType> = React.memo(({demo = false}) => {
-    console.log('TodoListsList')
+export const TodoListsList: FC<PropsType> = memo(({demo = false}) => {
+
     const dispatch = useDispatch()
     const todoLists = useSelector<AppRootStateType, InitialTodoListsStateType>(state => state.todoLists)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
@@ -34,21 +34,17 @@ export const TodoListsList: React.FC<PropsType> = React.memo(({demo = false}) =>
         dispatch(fetchTodoListsTC())
     }, [dispatch, isLoggedIn, demo])
 
-    function removeTodolist(todoListId: string) {
-        dispatch(removeTodoListTC(todoListId))
-    }
+    const removeTodolist = useCallback((todoListId: string) =>
+        dispatch(removeTodoListTC(todoListId)), [dispatch])
 
-    const addTodoList = useCallback((title: string) => {
-        dispatch(addTodoListTC(title))
-    }, [dispatch])
+    const addTodoList = useCallback((title: string) =>
+        dispatch(addTodoListTC(title)), [dispatch])
 
-    function changeTodoListTitle(title: string, todoListId: string) {
-        dispatch(changeTodoListTitleTC(todoListId, title))
-    }
+    const changeTodoListTitle = useCallback((title: string, todoListId: string) =>
+        dispatch(changeTodoListTitleTC(todoListId, title)), [dispatch])
 
-    function changeFilter(value: FilterValuesType, todoListId: string) {
-        dispatch(changeTodoListFilterAC(value, todoListId))
-    }
+    const changeFilter = useCallback((value: FilterValuesType, todoListId: string) =>
+        dispatch(changeTodoListFilterAC(value, todoListId)), [dispatch])
 
     if (!isLoggedIn) {
         return <Redirect to={'/login'}/>

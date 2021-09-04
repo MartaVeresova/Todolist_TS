@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from 'react';
+import React, {ChangeEvent, FC, KeyboardEvent, memo, useCallback, useState} from 'react';
 import {Input} from '@material-ui/core';
 
 export type EditableSpanPropsType = {
@@ -7,7 +7,7 @@ export type EditableSpanPropsType = {
     onChangeTitle: (changedTitle: string) => void
 }
 
-export const EditableSpan = React.memo(({title, disabled = false, onChangeTitle}: EditableSpanPropsType) => {
+export const EditableSpan: FC<EditableSpanPropsType> = memo(({title, disabled = false, onChangeTitle}) => {
 
     const [editMode, setEditMode] = useState(false)
     const [itemTitle, setItemTitle] = useState(title)
@@ -22,9 +22,8 @@ export const EditableSpan = React.memo(({title, disabled = false, onChangeTitle}
         onChangeTitle(itemTitle)
     }, [onChangeTitle, itemTitle, title])
 
-    const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        setItemTitle(e.currentTarget.value)
-    }, [])
+    const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) =>
+        setItemTitle(e.currentTarget.value), [])
 
     const onKeyPressHandler = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {

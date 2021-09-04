@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect} from 'react';
-import './App.css';
+import React, {FC, useCallback, useEffect} from 'react';
+import s from './App.module.css';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -25,15 +25,12 @@ type PropsType = {
     demo?: boolean
 }
 
-function App({demo = false}: PropsType) {
-    console.log('App')
+const App: FC<PropsType> = ({demo = false}) => {
+
     const dispatch = useDispatch()
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
-    console.log('App Status ' + status)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
-    console.log('App isInitialized ' + isInitialized)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
-    console.log('App isLoggedIn ' + isLoggedIn)
 
     useEffect(() => {
         dispatch(initializeAppTC())
@@ -45,8 +42,7 @@ function App({demo = false}: PropsType) {
 
 
     if (!isInitialized) {
-        return <div
-            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+        return <div className={s.circularProgress}>
             <CircularProgress/>
         </div>
     }

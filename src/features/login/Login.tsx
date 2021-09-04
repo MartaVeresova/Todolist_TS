@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {FC, memo} from 'react'
 import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
@@ -19,8 +19,8 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import {RequestStatusType} from '../../app/app-reducer';
 
 
-export const Login = React.memo(() => {
-    console.log('Login')
+export const Login: FC = memo(() => {
+
     const dispatch = useDispatch()
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
@@ -77,11 +77,9 @@ export const Login = React.memo(() => {
                         style={{height: '65px'}}
                         variant="outlined"
                         margin="normal"
-                        required
                         fullWidth
                         label="Test Email: free@samuraijs.com"
                         type="email"
-                        // autoFocus
                         helperText={formik.touched.email && formik.errors.email}
                         error={formik.touched.email && !!formik.errors.email}
                         {...formik.getFieldProps('email')}
@@ -91,7 +89,6 @@ export const Login = React.memo(() => {
                         style={{height: '65px'}}
                         variant="outlined"
                         margin="normal"
-                        required
                         fullWidth
                         label="Test Password: free"
                         type="password"

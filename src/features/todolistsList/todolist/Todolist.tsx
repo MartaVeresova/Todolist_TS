@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {FC, memo, useCallback, useEffect} from 'react';
 import {AddItemForm} from '../../../components/addItemForm/AddItemForm';
 import {EditableSpan} from '../../../components/editableSpan/EditableSpan';
 import Button from '@material-ui/core/Button';
@@ -9,7 +9,7 @@ import {AppRootStateType} from '../../../app/store';
 import {addNewTaskTC, fetchTasksTC} from '../tasks-reducer';
 import {Task} from './task/Task';
 import {TaskStatuses} from '../../../api/todolist-api';
-import {FilterValuesType, removeTodoListTC, TodoListDomainType} from '../todoLists-reducer';
+import {FilterValuesType, TodoListDomainType} from '../todoLists-reducer';
 import {RequestStatusType} from '../../../app/app-reducer';
 import {TaskDomainType} from '../../../app/App';
 
@@ -24,15 +24,9 @@ export type TodoListPropsType = {
 }
 
 
-export const TodoList = React.memo(({
-                                        todoList,
-                                        changeTodoListTitle,
-                                        removeTodolist,
-                                        changeFilter,
-                                        entityStatus,
-                                        demo = false,
-                                    }: TodoListPropsType) => {
-    console.log('TodoList')
+export const TodoList: FC<TodoListPropsType> = memo(props => {
+    const {todoList, changeTodoListTitle, removeTodolist, changeFilter, entityStatus, demo = false,} = props
+
     const tasks = useSelector<AppRootStateType, Array<TaskDomainType>>(state => state.tasks[todoList.id])
     const dispatch = useDispatch()
 
@@ -55,28 +49,25 @@ export const TodoList = React.memo(({
     }
     const newTasks = getTaskForTodoList()
 
-    const onAllClickHandler = useCallback(() => {
-        changeFilter('all', todoList.id)
-    }, [changeFilter, todoList.id])
+    const onAllClickHandler = useCallback(() =>
+        changeFilter('all', todoList.id), [changeFilter, todoList.id])
 
-    const onActiveClickHandler = useCallback(() => {
-        changeFilter('active', todoList.id)
-    }, [changeFilter, todoList.id])
+    const onActiveClickHandler = useCallback(() =>
+        changeFilter('active', todoList.id), [changeFilter, todoList.id])
 
-    const onCompletedClickHandler = useCallback(() => {
-        changeFilter('completed', todoList.id)
-    }, [changeFilter, todoList.id])
+    const onCompletedClickHandler = useCallback(() =>
+        changeFilter('completed', todoList.id), [changeFilter, todoList.id])
 
-    const onClickRemoveTodolist = useCallback(() => {
-        dispatch(removeTodoListTC(todoList.id))
-        // removeTodolist(todoList.id)
-    }, [removeTodolist, todoList.id])
+    const onClickRemoveTodolist = useCallback(() =>
+        removeTodolist(todoList.id), [removeTodolist, todoList.id])
 
-    const addNewTask = useCallback((newItemTitle: string) => {
-        dispatch(addNewTaskTC(todoList.id, newItemTitle))
-    }, [dispatch, todoList.id])
+    const onChangeTodoListTitle = useCallback((changedTitle: string) =>
+        changeTodoListTitle(changedTitle, todoList.id), [changeTodoListTitle, todoList.id])
 
-    const onChangeTodoListTitle = useCallback((changedTitle: string) => changeTodoListTitle(changedTitle, todoList.id), [changeTodoListTitle, todoList.id])
+    const addNewTask = useCallback((newItemTitle: string) =>
+        dispatch(addNewTaskTC(todoList.id, newItemTitle)), [dispatch, todoList.id])
+
+
     return (
         <div>
             <h3 style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>

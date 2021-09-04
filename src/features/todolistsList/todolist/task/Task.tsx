@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback} from 'react';
+import React, {ChangeEvent, FC, memo, useCallback} from 'react';
 import {EditableSpan} from '../../../../components/editableSpan/EditableSpan';
 import {Checkbox, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
@@ -15,21 +15,19 @@ export type TaskPropsType = {
 }
 
 
-export const Task = React.memo(({todoListId, task, entityStatus}: TaskPropsType) => {
-    console.log('Task')
+export const Task: FC<TaskPropsType> = memo(({todoListId, task, entityStatus}) => {
+
     const dispatch = useDispatch()
 
-    const onRemoveHandler = useCallback(() => {
-        return dispatch(removeTaskTC(todoListId, task.id))
-    }, [dispatch, task, todoListId])
-
-    // dispatch(removeTaskTC(todoListId, task.id)), [dispatch, task, todoListId])
+    const onRemoveHandler = useCallback(() =>
+        dispatch(removeTaskTC(todoListId, task.id)), [dispatch, task, todoListId])
 
     const onChangeChecked = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         dispatch(updateTaskTC(todoListId, {status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New}, task.id))
     }, [dispatch, task, todoListId])
 
-    const onChangeTitle = useCallback((changedTitle: string) => dispatch(updateTaskTC(todoListId, {title: changedTitle}, task.id)), [dispatch, task, todoListId])
+    const onChangeTitle = useCallback((changedTitle: string) =>
+        dispatch(updateTaskTC(todoListId, {title: changedTitle}, task.id)), [dispatch, task, todoListId])
 
     const taskClasses = task.status === TaskStatuses.Completed ? 'isDone' : ''
 

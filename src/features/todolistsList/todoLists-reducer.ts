@@ -12,28 +12,6 @@ export const todoListsReducer = (state = initialState, action: TodoListsActionsT
 
     switch (action.type) {
 
-        // case 'todo/SET-TODOLISTS':
-        //     return action.todoLists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
-        //
-        // case 'todo/REMOVE-TODOLIST':
-        //     return state.filter(tl => tl.id !== action.id)
-        //
-        // case 'todo/ADD-NEW-TODOLIST':
-        //
-        //
-        // case 'todo/CHANGE-TODOLIST-TITLE':
-        //
-        // case 'todo/CHANGE-TODOLIST-FILTER':
-        //
-        // case 'todo/CHANGE-TODOLIST-ENTITY-STATUS':
-        //
-        //
-        //
-        //
-        //
-        //
-
-
         case 'todo/SET-TODOLISTS':
             return action.todoLists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
 
@@ -58,20 +36,14 @@ export const todoListsReducer = (state = initialState, action: TodoListsActionsT
 }
 
 //actions
-export const setTodoListsAC = (todoLists: TodoListType[]) => {
-    return ({type: 'todo/SET-TODOLISTS', todoLists} as const)
-}
-// ({type: 'todo/SET-TODOLISTS', todoLists} as const)
+export const setTodoListsAC = (todoLists: TodoListType[]) =>
+    ({type: 'todo/SET-TODOLISTS', todoLists} as const)
 
-export const removeTodoListAC = (id: string) => {
-    return ({type: 'todo/REMOVE-TODOLIST', id} as const)
-}
-// ({type: 'todo/REMOVE-TODOLIST', id} as const)
+export const removeTodoListAC = (id: string) =>
+    ({type: 'todo/REMOVE-TODOLIST', id} as const)
 
-export const addNewTodoListAC = (todoList: TodoListType) => {
-    return ({type: 'todo/ADD-NEW-TODOLIST', todoList} as const)
-}
-// ({type: 'todo/ADD-NEW-TODOLIST', todoList} as const)
+export const addNewTodoListAC = (todoList: TodoListType) =>
+    ({type: 'todo/ADD-NEW-TODOLIST', todoList} as const)
 
 export const changeTodoListTitleAC = (title: string, id: string) =>
     ({type: 'todo/CHANGE-TODOLIST-TITLE', title, id} as const)
@@ -79,10 +51,8 @@ export const changeTodoListTitleAC = (title: string, id: string) =>
 export const changeTodoListFilterAC = (filter: FilterValuesType, id: string) =>
     ({type: 'todo/CHANGE-TODOLIST-FILTER', filter, id} as const)
 
-export const changeTodolistEntityStatusAC = (entityStatus: RequestStatusType, id: string) => {
-    return   ({type: 'todo/CHANGE-TODOLIST-ENTITY-STATUS', entityStatus, id} as const)
-}
-    // ({type: 'todo/CHANGE-TODOLIST-ENTITY-STATUS', entityStatus, id} as const)
+export const changeTodolistEntityStatusAC = (entityStatus: RequestStatusType, id: string) =>
+    ({type: 'todo/CHANGE-TODOLIST-ENTITY-STATUS', entityStatus, id} as const)
 
 
 //thunks
